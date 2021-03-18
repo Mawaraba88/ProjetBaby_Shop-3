@@ -58,14 +58,14 @@ public class ProjetBabyShop3Application implements CommandLineRunner {
 				productRepo.save(new Product("C008", "Coffre à jouet", 100, "https://zupimages.net/viewer.php?id=21/11/bf2b.jpg",new Date(),(new Category(1))));
 				productRepo.save(new Product("C009", "Securité", 100, "https://zupimages.net/viewer.php?id=21/11/xlig.jpg", new Date(),(new Category(1))));
 				productRepo.save(new Product("C007", "Gigoteuse", 100,"https://zupimages.net/viewer.php?id=21/11/o455.jpg",new Date(),(new Category(1))));
+				
+				productRepo.save(new Product("S001", "Poussette", 799.99, "https://zupimages.net/viewer.php?id=21/11/h3fx.jpg", new Date(),(new Category(2))));
+				productRepo.save(new Product("S002", "Nacelles", 150,  "https://zupimages.net/viewer.php?id=21/11/19gi.jpg", new Date(),(new Category(2))));
+				productRepo.save(new Product("S003", "Port-bébé", 250, "https://zupimages.net/viewer.php?id=21/11/yltz.jpg", new Date(),(new Category(2))));
+				productRepo.save(new Product("S004", "Sac à langer", 90, "https://zupimages.net/viewer.php?id=21/11/3zat.jpg", new Date(),(new Category(2))));
+				//productRepo.save(new Product("S005", "Habillages pluie", 30, "", new Date(),(new Category(2))));
+				
 				/*
-				productRepo.save(new Product("S001", "Poussette", 100,new Date(),(new Category(2))));
-				productRepo.save(new Product("S002", "Nacelles", 100,new Date(),(new Category(2))));
-				productRepo.save(new Product("S003", "Port-bébé", 100,new Date(),(new Category(2))));
-				productRepo.save(new Product("S004", "Sac à langer", 100,new Date(),(new Category(2))));
-				productRepo.save(new Product("S005", "Habillages pluie", 100,new Date(),(new Category(2))));
-				
-				
 				productRepo.save(new Product("R001", "Biberons", 100,(new Category("Repas"))));
 				productRepo.save(new Product("R002", "Accessoires biberons", 100,(new Category("Repas"))));
 				productRepo.save(new Product("R003", "Sucettes et anneaux de dentitions", 100,(new Category("Repas"))));
