@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8">
+      <title>Accès refusé</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+   </head>
+    
+   <body>
+    
+      <th:block th:include="/_header"></th:block>
+      <th:block th:include="/_menu"></th:block>
+       
+      <div class="page-title">Accès refusé!</div>
+      <h3 style="color:red;">Désolé,vous pouvez pas acceder à cette page!</h3>
+       
+      <th:block th:include="/_footer"></th:block>
+       
+   </body>
+</html>
