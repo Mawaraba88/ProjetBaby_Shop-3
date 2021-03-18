@@ -44,7 +44,9 @@ public class ProjetBabyShop3Application implements CommandLineRunner {
 			//Insertion des caétogoires
 				
 				categoryRepo.save(new Category("Chambre", "https://zupimages.net/viewer.php?id=21/11/aqpr.jpg"));
-				
+				categoryRepo.save(new Category("Sortie", "https://zupimages.net/viewer.php?id=21/11/neoo.jpg"));
+				categoryRepo.save(new Category("Repas", "https://zupimages.net/viewer.php?id=21/11/wgm5.jpg"));
+				categoryRepo.save(new Category("Eveil", "https://zupimages.net/viewer.php?id=21/11/3oy9.jpg"));
 				
 				productRepo.save(new Product("C001", "Lit", 100, "https://zupimages.net/viewer.php?id=21/11/tpyh.jpg", new Date(),(new Category(1))));
 				productRepo.save(new Product("C002", "Commodes", 100,"https://zupimages.net/viewer.php?id=21/11/bf2b.jpg",new Date(),(new Category(1))));
