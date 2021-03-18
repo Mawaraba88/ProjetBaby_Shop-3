@@ -65,24 +65,25 @@ public class ProjetBabyShop3Application implements CommandLineRunner {
 				productRepo.save(new Product("S004", "Sac à langer", 90, "https://zupimages.net/viewer.php?id=21/11/3zat.jpg", new Date(),(new Category(2))));
 				//productRepo.save(new Product("S005", "Habillages pluie", 30, "", new Date(),(new Category(2))));
 				
-				/*
-				productRepo.save(new Product("R001", "Biberons", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R002", "Accessoires biberons", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R003", "Sucettes et anneaux de dentitions", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R004", "Chaises hautes", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R005", "Stérélisateurs", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R006", "Bavoirs", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R007", "Chauffe-Biberons", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R008", "Stérélisateurs", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R009", "Tire-lait", 100,(new Category("Repas"))));
-				productRepo.save(new Product("R0010", "Cuisseurs", 100,(new Category("Repas"))));
 				
-				productRepo.save(new Product("E001", "Tapis d'éveil", 100,(new Category("Eveil"))));
-				productRepo.save(new Product("E002", "Transat", 100,(new Category("Eveil"))));
-				productRepo.save(new Product("E003", "Panda hochet", 100,(new Category("Eveil"))));
-				productRepo.save(new Product("E004", "Doudou", 100,(new Category("Eveil"))));
-				productRepo.save(new Product("E005", "Sophie la girafe", 100,(new Category("Eveil"))));
-				*/
+				productRepo.save(new Product("R001", "Biberons", 100, "https://zupimages.net/viewer.php?id=21/11/lmb3.jpg", (new Category(3))));
+				productRepo.save(new Product("R002", "Accessoires biberons", 100, "https://zupimages.net/viewer.php?id=21/11/1s8n.jpg", (new Category(3))));
+				productRepo.save(new Product("R003", "Sucettes", 100, "https://zupimages.net/viewer.php?id=21/11/isb6.jpg", (new Category(3))));
+				productRepo.save(new Product("R004", "Chaises hautes", 100, "https://zupimages.net/viewer.php?id=21/11/kbz0.jpg", (new Category(3))));
+				productRepo.save(new Product("R005", "Stérélisateurs", 100, "https://zupimages.net/viewer.php?id=21/11/2ypz.jpg", (new Category(3))));
+				productRepo.save(new Product("R006", "Bavoirs", 100, "https://zupimages.net/viewer.php?id=21/11/t6fg.jpg", (new Category(3))));
+				productRepo.save(new Product("R007", "Chauffe-Biberons", 100, "https://zupimages.net/viewer.php?id=21/11/b9fo.jpg", (new Category(3))));
+				productRepo.save(new Product("R008", "Anneaux de dentitions", 100, "https://zupimages.net/viewer.php?id=21/11/zkge.jpg", (new Category(3))));
+				productRepo.save(new Product("R009", "Tire-lait", 100, "https://zupimages.net/viewer.php?id=21/11/cc98.jpg", (new Category(3))));
+				productRepo.save(new Product("R0010", "Cuisseurs", 100, "https://zupimages.net/viewer.php?id=21/11/7vvp.jpg", (new Category(3))));
+
+				
+				productRepo.save(new Product("E001", "Tapis d'éveil", 100, "https://zupimages.net/viewer.php?id=21/11/vo6q.jpg", (new Category(4))));
+				productRepo.save(new Product("E002", "Transat", 100, "https://zupimages.net/viewer.php?id=21/11/t3b6.jpg", (new Category(4))));
+				productRepo.save(new Product("E003", "Panda hochet", 100, "https://zupimages.net/viewer.php?id=21/11/ieeh.jpg", (new Category(4))));
+				productRepo.save(new Product("E004", "Doudou", 100, "https://zupimages.net/viewer.php?id=21/11/vs8m.jpg", (new Category(4))));
+				productRepo.save(new Product("E005", "Sophie la girafe", 100, "https://zupimages.net/viewer.php?id=21/11/krar.jpg", (new Category(4))));
+				
 				
 	}
 
