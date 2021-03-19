@@ -8,4 +8,8 @@ import projet.babyShop3.entity.Account;
 
 public interface AccountRepository extends JpaRepository<Account, String> {
 
+	Account findByUserName(String username);
+	
+	
+
 }

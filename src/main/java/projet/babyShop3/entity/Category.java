@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 //import javax.validation.constraints.NotEmpty;
 //import javax.validation.constraints.Size;
-@Entity @Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Entity
 @Table(name="category")
 public class Category {
 	@Id
