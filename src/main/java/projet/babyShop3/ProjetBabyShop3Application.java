@@ -1,8 +1,6 @@
 package projet.babyShop3;
 
-
-
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,31 +9,31 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import projet.babyShop3.entity.Account;
 import projet.babyShop3.entity.Category;
-import projet.babyShop3.entity.Product;
 import projet.babyShop3.repository.AccountRepository;
 import projet.babyShop3.repository.CategoryRepository;
-import projet.babyShop3.repository.ProductRepository;
 
 @SpringBootApplication
-public class ProjetBabyShop3Application   {
-	
-	
-	@Autowired
-	private AccountRepository accountRepo;
-	@Autowired
-	private ProductRepository productRepo;
-	
-	@Autowired
-	private CategoryRepository categoryRepo;
-	
+public class ProjetBabyShop3Application /* implements CommandLineRunner */ {
+
+	/*
+	 * @Autowired private AccountRepository accountRepo;
+	 * 
+	 * @Autowired private ProductRepository productRepo;
+	 * 
+	 * @Autowired private CategoryRepository categoryRepo;
+	 */
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetBabyShop3Application.class, args);
 	}
 
 	/*
-	 * @Override public void run(String... args) throws Exception { // Insertion des
-	 * données Account accountRepo.save(new Account("Mawaraba",true,
+	 * @Override public void run(String... args) throws Exception {
+	 */
+	// Insertion des données Account
+
+	/*
+	 * accountRepo.save(new Account("Mawaraba",true,
 	 * "$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu",
 	 * "ROLE_EMPLOYEE")); accountRepo.save(new Account("Fatoumata", true,
 	 * "$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu",
@@ -47,13 +45,13 @@ public class ProjetBabyShop3Application   {
 	 * 
 	 * //Insertion des caétogoires
 	 * 
-	 * categoryRepo.save(new Category("Chambre",
-	 * "https://zupimages.net/viewer.php?id=21/11/aqpr.jpg")); categoryRepo.save(new
-	 * Category("Sortie", "https://zupimages.net/viewer.php?id=21/11/neoo.jpg"));
-	 * categoryRepo.save(new Category("Repas",
-	 * "https://zupimages.net/viewer.php?id=21/11/wgm5.jpg")); categoryRepo.save(new
-	 * Category("Eveil", "https://zupimages.net/viewer.php?id=21/11/3oy9.jpg"));
-	 * 
+	 * categoryRepo.save(new Category("Chambre","chambre.JPG"));
+	 * categoryRepo.save(new Category("Sortie", "sorti.JPG")); categoryRepo.save(new
+	 * Category("Repas","repas.JPG")); categoryRepo.save(new Category("Eveil",
+	 * "eveil.JPG"));
+	 */
+
+	/*
 	 * productRepo.save(new Product("C001", "Lit", 100,
 	 * "https://zupimages.net/viewer.php?id=21/11/gwjw.jpg", new Date(),(new
 	 * Category(1)))); productRepo.save(new Product("C002", "Commodes",
@@ -125,6 +123,18 @@ public class ProjetBabyShop3Application   {
 	 * Category(4))));
 	 * 
 	 * 
-	 * }
+	 */
+
+	/*
+	 * List<Category> cat = categoryRepo.findAll();
+	 * cat.forEach(p->System.out.println(p.getNameCategory()));
 	 */
 }
+
+/*
+ * Category cat = new Category(); Byte [] photo = new Byte [1024];
+ * 
+ * categoryRepo.save(new Category("Chambre", photo));
+ */
+
+//}

@@ -7,38 +7,53 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-//import javax.validation.constraints.NotEmpty;
-//import javax.validation.constraints.Size;
 @Entity
 @Table(name="category")
+/*
+ * @Data
+ * 
+ * @AllArgsConstructor
+ * 
+ * @NoArgsConstructor
+ */
 public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	  @Column(name = "idCategory", length = 20, nullable = false)
 	private Integer idcategory;
-	//@NotEmpty
-	//@Size(min=4, max=20)
+	@NotEmpty
+	@Size(min=4, max=20)
 	@Column(name = "nameCategory", length = 20, nullable = false)
 	private String nameCategory;
 
+	/*@Lob
+	private Byte[] photo;*/
+	@NotEmpty
 	@Column
 	private String photo;
+	
+	@Column
+	private String photosImagePath; 
+	 
+	
 	
 	
 	@Transient 
 	@OneToMany(mappedBy="category")	
 	private Collection<Product> product;
 	
-	
+	 @Transient
+	    public String getPhotosImagePath() {
+	        if (photo == null || idcategory == null) return null;
+	         
+	        return "/imageBabyShop/" + idcategory + "/" + photo;
+	    }
 
 
 	public Category() {
@@ -83,10 +98,9 @@ public class Category {
 	}
 
 
-	public String getPhoto() {
-		return photo;
-	}
-
+	
+	  public String getPhoto() { return photo; }
+	 
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
@@ -101,7 +115,11 @@ public class Category {
 	public void setProduct(Collection<Product> product) {
 		this.product = product;
 	}
+
 	
+	  public void setPhotosImagePath(String photosImagePath) { this.photosImagePath
+	  = photosImagePath; }
+	 
 	
 
 
