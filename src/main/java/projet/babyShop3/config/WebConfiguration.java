@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  
 
@@ -22,8 +23,12 @@ public class WebConfiguration implements WebMvcConfigurer {
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
+	/*
+	 * @Override public void addViewControllers(ViewControllerRegistry registry) {
+	 * registry.addViewController("/").setViewName("index"); }
+	 */
 	
-	  @Override
+	  /*@Override
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	        exposeDirectory("imageBabyShop", registry);
 	    }
@@ -35,6 +40,12 @@ public class WebConfiguration implements WebMvcConfigurer {
 	        if (dirName.startsWith("../")) dirName = dirName.replace("../", "");
 	         
 	        registry.addResourceHandler("/" + dirName + "/**").addResourceLocations("file:/"+ uploadPath + "/");
-	    }
+	    }*/
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		Path uploadDir = Paths.get("./imageBabyShop");
+		String uploadPath = uploadDir.toFile().getAbsolutePath();
+		registry.addResourceHandler("/imageBabyShop/**").addResourceLocations("file:/" + uploadPath + "/");
+	}
 
 }

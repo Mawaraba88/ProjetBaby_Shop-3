@@ -4,24 +4,27 @@ package projet.babyShop3.controller;
 
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
 import projet.babyShop3.entity.Category;
 import projet.babyShop3.repository.CategoryRepository;
 import projet.babyShop3.repository.ProductRepository;
-import projet.babyShop3.validator.FileUploadUtil;
 
 @Controller
 @Transactional
@@ -72,16 +75,27 @@ public class MainController {
 	}
 	
 	@PostMapping("/category/save")
-	public RedirectView saveCategory(Category cat, 
+	public String saveCategory(@ModelAttribute (name = "category") Category cat, 
 			@RequestParam("picture")MultipartFile multipartFile)throws IOException {
 		
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		cat.setPhoto(fileName);
 		 Category saveCat = categoryrepo.save(cat);
-		 String uploadDir = "imageBabyShop/" + saveCat.getIdcategory();
-		 FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
+		 String uploadDir = "./imageBabyShop/" + saveCat.getIdcategory();
 		 
-		  return new RedirectView("/", true);
+		 Path uploadPath = Paths.get(uploadDir);
+		 if(!Files.exists(uploadPath)) {
+			 Files.createDirectories(uploadPath);
+		 }
+		 try (InputStream inputStream = multipartFile.getInputStream()){
+			 Path filePath = uploadPath.resolve(fileName);
+			 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		 }catch(IOException e) {
+			 throw new IOException("Could not save upload file: " + fileName);
+		 }
+		 //FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
+		 
+		  return "redirect:index";
 		 
 		
 		
