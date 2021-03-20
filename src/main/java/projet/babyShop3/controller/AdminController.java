@@ -25,28 +25,21 @@ public class AdminController {
 	      return "login";
 	   }
 	   
-	   
-	   /*// POST: Save category
-	   @RequestMapping(value = { "/category" }, method = RequestMethod.POST)
-	   public String categorySave(Model model, //
-	         @ModelAttribute("productForm") @Validated ProductForm productForm, //
-	         BindingResult result, //
-	         final RedirectAttributes redirectAttributes) {
-	 
-	      if (result.hasErrors()) {
-	         return "product";
-	      }
-	      try {
-	         productDAO.save(productForm);
-	      } catch (Exception e) {
-	         Throwable rootCause = ExceptionUtils.getRootCause(e);
-	         String message = rootCause.getMessage();
-	         model.addAttribute("errorMessage", message);
-	         // Show product form.
-	         return "product";
-	      }
-	 
-	      return "redirect:/productList";
-	   }*/
-
+		/*
+		 * // POST: Save category
+		 * 
+		 * @RequestMapping(value = { "/category" }, method = RequestMethod.POST) public
+		 * String categorySave(Model model, //
+		 * 
+		 * @ModelAttribute("productForm") @Validated ProductForm productForm, //
+		 * BindingResult result, // final RedirectAttributes redirectAttributes) {
+		 * 
+		 * if (result.hasErrors()) { return "product"; } try {
+		 * productDAO.save(productForm); } catch (Exception e) { Throwable rootCause =
+		 * ExceptionUtils.getRootCause(e); String message = rootCause.getMessage();
+		 * model.addAttribute("errorMessage", message); // Show product form. return
+		 * "product"; }
+		 * 
+		 * return "redirect:/productList"; }
+		 */
 }

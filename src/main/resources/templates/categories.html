@@ -23,11 +23,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="categories: ${listCategory}">
+					<th:block th:each="cat: ${listCategory}">
 						<tr>
-							<td>[[${categories.idcategory}]]</td>
-							<td>[[${categories.nameCategory}]]</td>
-							<<!-- td>[[${categories.photoImagePath}]]</td> -->
+							<td th:text="${cat.idcategory}"></td>
+							<td th:text="${cat.nameCategory}"></td>
+							<td> <img th:src="@{${cat.photoImagePath}}" /></td>
 						
 						</tr>
 					</th:block>

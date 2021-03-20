@@ -95,7 +95,7 @@ public class MainController {
 		 }
 		 //FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
 		 
-		  return "redirect:index";
+		  return "redirect:/category";
 		 
 		
 		
