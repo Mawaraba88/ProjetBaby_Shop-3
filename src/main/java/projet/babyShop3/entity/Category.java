@@ -38,22 +38,11 @@ public class Category {
 	@Column
 	private String photo;
 	
-	@Column
-	private String photosImagePath; 
-	 
-	
-	
 	
 	@Transient 
 	@OneToMany(mappedBy="category")	
 	private Collection<Product> product;
-	
-	 @Transient
-	    public String getPhotosImagePath() {
-	        if (photo == null || idcategory == null) return null;
-	         
-	        return "/imageBabyShop/" + idcategory + "/" + photo;
-	    }
+
 
 
 	public Category() {
@@ -117,10 +106,14 @@ public class Category {
 	}
 
 	
-	  public void setPhotosImagePath(String photosImagePath) { this.photosImagePath
-	  = photosImagePath; }
-	 
 	
+		
+		 @Transient
+		    public String getPhotoImagePath() {
+		        if (photo == null || idcategory == null) return null;
+		         
+		        return "/imageBabyShop/" + idcategory + "/" + photo;
+		    }
 
 
 	
