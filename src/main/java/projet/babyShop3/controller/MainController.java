@@ -11,16 +11,23 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import projet.babyShop3.entity.Category;
 import projet.babyShop3.entity.Product;
@@ -75,12 +82,20 @@ public class MainController {
 		return "categories_form";	
 	}
 	
+	//Pour faire la validation avec l'annotation @Valid, on ajoute l'attribut BindingResult
+	
 	@PostMapping("/category/save")
-	public String saveCategory(@ModelAttribute (name = "category") Category cat, 
+	public String saveCategory( @ModelAttribute (name = "category") Category cat, 
+			BindingResult bindingResult,
 			@RequestParam("picture")MultipartFile multipartFile)throws IOException {
 		
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		cat.setPhoto(fileName);
+		
+		//condition de verification si les paramètre de validation sont ok
+				if(bindingResult.hasErrors()) {
+					return "categories_form";
+				}
 		 Category saveCat = categoryRepo.save(cat);
 		 String uploadDir = "./imageBabyShop/" + saveCat.getIdcategory();
 		 
@@ -102,6 +117,7 @@ public class MainController {
 	
 	
 	// POur les produits
+	
 	
 
 	
