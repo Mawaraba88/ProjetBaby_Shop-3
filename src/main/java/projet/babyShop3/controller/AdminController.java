@@ -10,12 +10,15 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -95,7 +98,7 @@ public class AdminController {
 		//@PostMapping("/admin/product")
 		@PostMapping("/products/save")
 		public String saveProduct(@ModelAttribute (name = "product") Product p, 
-				//RedirectAttributes ra,
+				RedirectAttributes ra,
 				@RequestParam("picture")MultipartFile multipartFile)throws IOException {
 			
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -116,35 +119,62 @@ public class AdminController {
 				 throw new IOException("Could not save upload file: " + fileName);
 			 }
 			
-			//ra.addFlashAttribute("message", "Ajout reussi");
+			ra.addFlashAttribute("message", "Ajout reussi");
 			//productRepo.add("listProduct", listProduct);
 			return "redirect:/products";
 			
 		}
 		
+		 // Liste des produits
+		  
+		  @GetMapping("/products")
+		  public String listProducts(Model model,
+				  @RequestParam(name="page", defaultValue="0") int page,
+				  @RequestParam(name="name", defaultValue="") String name,
+				  @RequestParam(name="size", defaultValue="2") int size) 
+		  {
+		  
+			  Page<Product> listProduct = productRepo.findByNameContains(name, PageRequest.of(page, size));
+			  model.addAttribute("listProduct", listProduct);
+			  model.addAttribute("currentPage", page);
+			  model.addAttribute("size", size);
+			  model.addAttribute("name",name);
+			  model.addAttribute("page",new int [listProduct.getTotalPages()]);
+			  
+				/*
+				 * List<Product> listProduct = productRepo.findAll();
+				 * model.addAttribute("listProduct", listProduct);
+				 */
+		  
+		  return "productList"; 
+		  }
+		
+
+		
 
 	
-		/*
-		 * @GetMapping("products/edit/{idProduit}") public String
-		 * showEditProductForm(@PathVariable("idProduit") Integer id, Model model) {
-		 * 
-		 * Produit product = productRepo.findById(id).get();
-		 * model.addAttribute("product", product);
-		 * 
-		 * List<Categorie> listCategories = categoryRepo.findAll();
-		 * 
-		 * model.addAttribute("listCategories", listCategories); return "product_form";
-		 * 
-		 * 
-		 * }
-		 * 
-		 * 
-		 * @GetMapping("products/delete/{idProduit}") public String
-		 * deleteProduct(@PathVariable("idProduit") Integer id, Model model) {
-		 * productRepo.deleteById(id);
-		 * 
-		 * return "redirect:/produits"; }
-		 */
+		
+		  @GetMapping("products/edit/{code}") public String
+		  showEditProductForm(@PathVariable("code") String code, Model model, RedirectAttributes ra) {
+		  
+		  Product product = productRepo.findById(code).get();
+		  model.addAttribute("product", product);
+		  List<Category> listCategory = categoryRepo.findAll();
+			model.addAttribute("listCategory", listCategory);
+			ra.addFlashAttribute("message", "Vos modifications ont été prises en compte");
+		
+		  return "product";
+		  
+		  }
+		  
+		  
+		  @GetMapping("products/delete/{code}") public String
+		  deleteProduct(@PathVariable("code") String code, Model model) {
+		  productRepo.deleteById(code);
+		  
+		  return "redirect:/products";
+		  }
+		 
 		
 		
 	

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+   <script type="text/javascript" href="/webjars/bootstrap/js/bootstrap.min.js"></script>
    <head>
       <meta charset="UTF-8">
       <title>Liste des produits</title>
@@ -26,12 +27,18 @@
                <a th:href="@{|/buyProduct?code=${prodInfo.code}|}">Acheter</a>
             </li> -->
             <!-- For Manager edit Product -->
-          <!--   <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
+            <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
                <li>
                  <a style="color:red;"
-                    th:href="@{|/admin/product?code=${prodInfo.code}|}">Modifier</a>
+                    th:href="@{'/products/edit/'+${prodInfo.code}}">Modifier</a>
                </li>
-            </th:block> -->
+               
+                <li>
+                 <a style="color:red;" 
+                 	onclick="javascript:return confirm('Êtes-vous sûre de vouloir supprimer?')"   
+                    th:href="@{'/products/delete/'+${prodInfo.code}}">Supprimer</a>
+               </li>
+            </th:block>
          </ul>
       </div>
        
@@ -52,17 +59,23 @@
   <ul class="pagination justify-content-center">
   	<ul class="nav nav-pills">
   		<li class="page-item"><a class="page-link"
-  		 style="color:#E70014;" href="#" tabindex="-1">Précédent</a></li>
+  		 href="#" tabindex="-1">Précédent</a></li>
   		 <li th:each="page, status:${page}">
-  		 <a style="color: #E70014;"
-  		 th:class="$status.index==cuurentPage? 'btn btn-secondary': 'btn'}"
-  		 </a>
-  		 	
+  		 <a 
+  		 th:class="${status.index==currentPage?'btn btn-secondary':'btn'}"
+  		 th:href="@{products(page=${status.index}, size=${size}, name=${name})}"
+  		 th:text="${status.index+1}"></a>
+  		</li>
+  		<li class="page-item"><a class="page-link" href="#">Suivant</a>
+  		
+  		</li>
   	</ul>
   
   </ul>
-       
+  
+ 
       <th:block th:include="/_footer"></th:block>
        
+
    </body>
 </html>
