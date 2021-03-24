@@ -123,19 +123,6 @@ public class AdminController {
 		}
 		
 
-		  // Liste des produits
-		  
-		  @GetMapping("/products")
-		  public String listProducts(Model model) {
-		  
-		  List<Product> listProduct = productRepo.findAll();
-		  model.addAttribute("listProduct", listProduct);
-		  
-		  return "productList"; 
-		  }
-		
-
-
 	
 		/*
 		 * @GetMapping("products/edit/{idProduit}") public String

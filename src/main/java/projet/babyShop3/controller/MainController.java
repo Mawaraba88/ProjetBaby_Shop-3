@@ -12,6 +12,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -103,6 +105,32 @@ public class MainController {
 	
 	// POur les produits
 	
+
+	  // Liste des produits
+	  
+	  @GetMapping("/products")
+	  public String listProducts(Model model,
+			  @RequestParam(name="page", defaultValue="0") int page,
+			  @RequestParam(name="name", defaultValue="") String name,
+			  @RequestParam(name="size", defaultValue="2") int size) 
+	  {
+	  
+		  Page<Product> listProduct = productRepo.findByNameContains(name, PageRequest.of(page, size));
+		  model.addAttribute("listProduct", listProduct);
+		  model.addAttribute("currentPage", page);
+		  model.addAttribute("size", size);
+		  model.addAttribute("name",name);
+		  model.addAttribute("page",new int [listProduct.getTotalPages()]);
+		  
+			/*
+			 * List<Product> listProduct = productRepo.findAll();
+			 * model.addAttribute("listProduct", listProduct);
+			 */
+	  
+	  return "productList"; 
+	  }
+	
+
 
 	
 }

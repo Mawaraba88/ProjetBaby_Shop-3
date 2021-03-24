@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
    <head>
       <meta charset="UTF-8">
       <title>Liste des produits</title>
@@ -12,7 +13,7 @@
        
       <div class="page-title">Liste des produits</div>
        
-      <div class="product-preview-container" th:each="prodInfo : ${listProduct}">
+      <div class="product-preview-container" th:each="prodInfo : ${listProduct.content}">
          <ul>
            <!--  <li><img class="product-image"
                th:src="@{|/productImage?code=${prodInfo.code}|}" /></li> -->
@@ -35,6 +36,7 @@
       </div>
        
       <br/>
+    
 <!--       <div class="page-navigator" th:if="${paginationProducts.totalPages > 1}"> -->
 <!--          <th:block th:each="page : ${paginationProducts.navigationPages}"> -->
          
@@ -45,6 +47,20 @@
              
 <!--          </th:block> -->
 <!--       </div> -->
+
+  <!-- Pagination -->
+  <ul class="pagination justify-content-center">
+  	<ul class="nav nav-pills">
+  		<li class="page-item"><a class="page-link"
+  		 style="color:#E70014;" href="#" tabindex="-1">Précédent</a></li>
+  		 <li th:each="page, status:${page}">
+  		 <a style="color: #E70014;"
+  		 th:class="$status.index==cuurentPage? 'btn btn-secondary': 'btn'}"
+  		 </a>
+  		 	
+  	</ul>
+  
+  </ul>
        
       <th:block th:include="/_footer"></th:block>
        
