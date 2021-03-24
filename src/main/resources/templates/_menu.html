@@ -3,8 +3,12 @@
    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
    <a th:href="@{/}">Acceuil</a>
    |
-   <a th:href="@{/productList}">
+   <a th:href="@{/products}">
    Produits
+   </a>
+   |
+    <a th:href="@{/category}">
+ 	Categories
    </a>
    |
    <a th:href="@{/shoppingCart}">
@@ -13,14 +17,19 @@
    |
    <th:block sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
       <a th:href="@{/admin/orderList}">
-      Liste des commandes
+      Les commandes
       </a>
       |
    </th:block>
    <th:block sec:authorize="hasRole('ROLE_MANAGER')">
-      <a th:href="@{/admin/product}">
-      Ajout de produits
+      <a th:href="@{/product/new}">
+      Ajout produits
       </a>
       |
    </th:block>
+      <th:block sec:authorize="hasRole('ROLE_MANAGER')">
+      <a th:href="@{/category/new}">
+      Ajout categories
+      </a>|
+
 </div>

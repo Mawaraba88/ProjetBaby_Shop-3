@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import projet.babyShop3.entity.Category;
+import projet.babyShop3.entity.Product;
 import projet.babyShop3.repository.CategoryRepository;
 import projet.babyShop3.repository.ProductRepository;
 
@@ -30,7 +31,7 @@ import projet.babyShop3.repository.ProductRepository;
 @Transactional
 public class MainController {
 	@Autowired
-	private CategoryRepository categoryrepo;
+	private CategoryRepository categoryRepo;
 	@Autowired
 	private ProductRepository productRepo;
 	
@@ -46,7 +47,7 @@ public class MainController {
 		         @RequestParam(value = "size", defaultValue = "4") int size*/) {
 		
 		
-		List<Category> listCategory = categoryrepo.findAll();
+		List<Category> listCategory = categoryRepo.findAll();
 		model.addAttribute("listCategory", listCategory);
 		/*Page<Category> listCategory = repo.findByNameCategory(likeName, PageRequest.of(page, size));
 		model.addAttribute("listCategory", listCategory);
@@ -61,7 +62,7 @@ public class MainController {
 	//Controle des catégories
 	@GetMapping("/category")
 	public String listCategory(Model model) {
-		List<Category> listCategory = categoryrepo.findAll();
+		List<Category> listCategory = categoryRepo.findAll();
 		model.addAttribute("listCategory", listCategory);
 		return "categories";
 		
@@ -80,7 +81,7 @@ public class MainController {
 		
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		cat.setPhoto(fileName);
-		 Category saveCat = categoryrepo.save(cat);
+		 Category saveCat = categoryRepo.save(cat);
 		 String uploadDir = "./imageBabyShop/" + saveCat.getIdcategory();
 		 
 		 Path uploadPath = Paths.get(uploadDir);
@@ -95,13 +96,14 @@ public class MainController {
 		 }
 		 //FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
 		 
-		  return "redirect:/category";
-		 
-		
-		
+		  return "redirect:/category";	
 		
 	}
 	
+	
+	// POur les produits
+	
+
 	
 }
 

@@ -2,24 +2,33 @@ package projet.babyShop3.repository;
 
 
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import projet.babyShop3.entity.Product;
 
 
 
 public interface ProductRepository extends JpaRepository<Product, String> {
+	
+	
+	/*
+	public interface ProductRepository extends PagingAndSortingRepository<Product, String> {
+	
 
-	public Page<Product> findByName(String name, Pageable pageable);
+	@Query("SELECT p FROM Product p WHERE " + "CONCAT(p.code, p.name, p.categroy, p.price)" + "LIKE %?1%")
+	public Page<Product>findAll(String keyword, Pageable pageable);
+	*/
+
+	/*public Page<Product> findByName(String name, Pageable pageable);
 	// POur une requête complexe;
 	@Query("select p from Product p where p.name like :x")
-	public Page<Product> searchProduct(@Param("x") String motCle, Pageable pageable);
+	public Page<Product> searchProduct(@Param("x") String motCle, Pageable pageable);*/
 	
-	
+
 	
 }
     
