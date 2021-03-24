@@ -3,22 +3,17 @@ package projet.babyShop3.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 
 @Entity
@@ -47,9 +42,15 @@ public class Product implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "Create_Date", nullable = true)
     private Date createDate;
-    @ManyToOne
-	@JoinColumn(name="idcategory")
-	private Category category;
+	
+	  @ManyToOne
+	 
+	  @JoinColumn(name="idcategory") 
+	  private Category category;
+	 
+    
+  
+    
     
     
 	public Product(String code, String name, double price, Category category) {
@@ -110,10 +111,83 @@ public class Product implements Serializable {
 	public Product() {
 		super();
 	}
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+
+	public Category getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 	
 
-    
-    
+	 @Transient
+	    public String getImageImagePath() {
+	        if (image == null || code== null) return null;
+	         
+	        return "/imageBabyShop/" + code + "/" + image;
+	    }
+
+
+
+	
 
 }
