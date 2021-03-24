@@ -12,6 +12,14 @@
        
       <div class="page-title">Bienvenue dans l'univers des bouts de choux</div>
       
+       <div>
+      	<form th:action="@{index}" method="get">
+      		<div>
+      			<input type="search" name="motCle"/>
+      			<button type="submit" name="search">Chercher</button>
+      		</div>
+      	</form>
+      </div>
       
       <!-- Liste des catégories -->
       

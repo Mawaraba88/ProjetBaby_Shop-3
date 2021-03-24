@@ -1,6 +1,11 @@
 package projet.babyShop3.controller;
 
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -10,6 +15,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -37,6 +43,15 @@ public class AdminController {
 	@Autowired
 	private CategoryRepository categoryRepo;
 	
+	  @Autowired
+	  private CategoryRepository categoryrepo;
+		
+	  @Autowired
+	  private ProductRepository productRepo;
+		
+	  @Autowired
+	  private OrderRepository orderRepo;
+	  
 	
 	   @RequestMapping(value = { "/admin/login" }, method = RequestMethod.GET)
 	   public String login(Model model) {
@@ -44,6 +59,21 @@ public class AdminController {
 	      return "login";
 	   }
 	   
+
+	   
+	   @RequestMapping(value = { "/admin/accountInfo" }, method = RequestMethod.GET)
+	   public String accountInfo(Model model) {
+	 
+	      UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      System.out.println(userDetails.getPassword());
+	      System.out.println(userDetails.getUsername());
+	      System.out.println(userDetails.isEnabled());
+	 
+	      model.addAttribute("userDetails", userDetails);
+	      return "accountInfo";
+	   }  
+	   
+
 		
 	// GET: Show product.// Insertion de nouveaux produits
 	   @RequestMapping(value = { "/product/new" }, method = RequestMethod.GET)
@@ -69,8 +99,6 @@ public class AdminController {
 	   }
 	   
 		
-		  
-		 
 		/*
 		 * // POST: Save product
 		 * 

@@ -12,6 +12,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -59,6 +61,26 @@ public class MainController {
 	      return "index";
 	   }
 	
+	
+	//Contrôle bouton rechercher
+		@PostMapping("/index/search")
+		   public String seaechProductBy(Model model,
+			         @RequestParam(value = "name", defaultValue = "") String likeName,
+			         @RequestParam(value = "id", defaultValue = "") Integer id,
+			         @RequestParam(value = "page", defaultValue = "1")int page,
+			         @RequestParam(value = "size", defaultValue = "4") int size) {
+			
+			Page<Product> pageProduct = productRepo.searchProduct("%"+likeName+"%", id, PageRequest.of(page, size));
+			model.addAttribute("currentPage", page);
+			model.addAttribute("size", size);
+			model.addAttribute("likename", likeName);
+			model.addAttribute("id", id);
+			model.addAttribute("pages", new int[pageProduct.getTotalPages()]);
+		   
+		      return "redirect:/productList";
+		   }
+	
+	
 	//Controle des catégories
 	@GetMapping("/category")
 	public String listCategory(Model model) {
@@ -74,6 +96,8 @@ public class MainController {
 		model.addAttribute("category", new Category());
 		return "categories_form";	
 	}
+	
+	//Pour faire la validation avec l'annotation @Valid, on ajoute l'attribut BindingResult
 	
 	@PostMapping("/category/save")
 	public String saveCategory(@ModelAttribute (name = "category") Category cat, 

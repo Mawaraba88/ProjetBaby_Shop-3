@@ -25,8 +25,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	/*public Page<Product> findByName(String name, Pageable pageable);
 	// POur une requête complexe;
-	@Query("select p from Product p where p.name like :x")
-	public Page<Product> searchProduct(@Param("x") String motCle, Pageable pageable);*/
+	@Query("select p from Product p where p.name like :x and p.category.idcategory like :y")
+	public Page<Product> searchProduct(@Param("x") String motCle, @Param("y") Integer id, Pageable pageable);
 	
 
 	
