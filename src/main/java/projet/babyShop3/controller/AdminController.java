@@ -10,8 +10,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -46,6 +44,19 @@ public class AdminController {
 	 
 	      return "login";
 	   }
+	   
+	   @RequestMapping(value = { "/admin/accountInfo" }, method = RequestMethod.GET)
+	   public String accountInfo(Model model) {
+	 
+	      UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      System.out.println(userDetails.getPassword());
+	      System.out.println(userDetails.getUsername());
+	      System.out.println(userDetails.isEnabled());
+	 
+	      model.addAttribute("userDetails", userDetails);
+	      return "accountInfo";
+	   }  
+	   
 	   
 		
 	// GET: Show product.// Insertion de nouveaux produits
@@ -153,6 +164,7 @@ public class AdminController {
 		
 
 	
+
 		
 		  @GetMapping("products/edit/{code}") public String
 		  showEditProductForm(@PathVariable("code") String code, Model model, RedirectAttributes ra) {
@@ -175,6 +187,7 @@ public class AdminController {
 		  return "redirect:/products";
 		  }
 		 
+
 		
 		
 	
