@@ -34,9 +34,7 @@ import projet.babyShop3.repository.ProductRepository;
 public class MainController {
 	@Autowired
 	private CategoryRepository categoryRepo;
-	@Autowired
-	private ProductRepository productRepo;
-	
+
 	/*
 	 * @Value("${dir.images}") private String dirImage;
 	 */
