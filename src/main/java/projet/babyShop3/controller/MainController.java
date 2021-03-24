@@ -12,6 +12,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -32,9 +34,7 @@ import projet.babyShop3.repository.ProductRepository;
 public class MainController {
 	@Autowired
 	private CategoryRepository categoryRepo;
-	@Autowired
-	private ProductRepository productRepo;
-	
+
 	/*
 	 * @Value("${dir.images}") private String dirImage;
 	 */
@@ -103,6 +103,8 @@ public class MainController {
 	
 	// POur les produits
 	
+
+	 
 
 	
 }
