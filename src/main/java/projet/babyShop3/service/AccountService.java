@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import projet.babyShop3.entity.Account;
 import projet.babyShop3.repository.AccountRepository;
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class AccountService implements UserDetailsService {
 
 
 	@Autowired
