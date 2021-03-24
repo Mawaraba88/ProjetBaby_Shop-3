@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
 
    <head>
       <meta charset="UTF-8">
@@ -11,16 +14,14 @@
     
       <th:block th:include="/_header"></th:block>
       <th:block th:include="/_menu"></th:block>
-       
-      <div class="page-title">Produits</div>
       
-      
-      
-      <div class="container">
-      
+      <div class="container text-center">
+      	  <div th:if="${product.code == null}"><h3>Ajouter un nouveau Produit</h3></div>
+      	  <div th:unless="${product.code == null}"><h3>Modifier le Produit</h3></div>
+      	  
      		<form th:action="@{/products/save}" th:object="${product}"
      		method="post" enctype="multipart/form-data" style="max-width: 400px; margin: 0 auto;">
-     		
+     	<!-- 	<input type="hidden" th:value="${product.code}"/> -->
      		<div>
      			<label>Code*:</label>
      			<input type="text" th:field="*{code}"/>
@@ -40,6 +41,10 @@
 	     				<label>Image*:</label>
 	     				<input type="file" class="form-control" name="picture" 
 	     				id="picture" accept="image/png, image/jpeg, image/jpg" required/>
+	     				</p>
+	     				<p>
+	     					<img id="thumbnail" alt="Image"/>
+	     				
 	     				</p>
 	     			
 	     			<p>
@@ -191,16 +196,13 @@
        
       <th:block th:include="/_footer"></th:block>
       
-   <!--     <script type="text/javascript">
+       <script type="text/javascript">
       	$(document).ready(function(){
       	
       		$('#picture').change(function(){
-      			shhowImageThumbnail(this);
+      			showImageThumbnail(this);
       		});
-      		$('#nuttonCancel').click(function(){
-      		
-      			window.location = "[[@{/product}]]";
-      		});
+      	
       	});
       	
       	function shwoImageThumbnail(fileInput) {
@@ -215,7 +217,15 @@
       	}
       
       
+      </script>
+  <!--     
+      <script >
+      function confirmer(url){
+		var rep=confir("Etes vous sure de vouloir supprimer?");
+		if(rep==true){
+			document.location=url;
+		}
+	}
       </script> -->
-       
-   </body>
+</body>
 </html>
