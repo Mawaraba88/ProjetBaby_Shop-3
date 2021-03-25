@@ -13,6 +13,15 @@
       <th:block th:include="/_menu"></th:block>
        
       <div class="page-title">Liste des produits</div>
+      
+        <!-- FOrmulaire du filtre -->
+      <form th:action="@{products}" method="get">
+   		 Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required />
+    		&nbsp;
+	    	<input type="submit" value="Search" />
+	    	&nbsp;
+   			 <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+	</form>
        
       <div class="product-preview-container" th:each="prodInfo : ${listProduct.content}">
          <ul>
@@ -75,7 +84,11 @@
   
  
       <th:block th:include="/_footer"></th:block>
-       
+   <script type="text/javascript">
+   		 function clearSearch() {
+        window.location = "[[@{products}]]";
+    	}
+    </script>
 
    </body>
 </html>

@@ -1,8 +1,5 @@
 package projet.babyShop3.controller;
 
-
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -35,121 +32,166 @@ public class MainController {
 	@Autowired
 	private CategoryRepository categoryRepo;
 
-	/*
-	 * @Value("${dir.images}") private String dirImage;
-	 */
-	
-	
-	@GetMapping("/")
-	   public String home(Model model/*, //
-		         @RequestParam(value = "name", defaultValue = "") String likeName,
-		         @RequestParam(value = "page", defaultValue = "1")int page,
-		         @RequestParam(value = "size", defaultValue = "4") int size*/) {
-		
-		
-		List<Category> listCategory = categoryRepo.findAll();
-		model.addAttribute("listCategory", listCategory);
-		/*Page<Category> listCategory = repo.findByNameCategory(likeName, PageRequest.of(page, size));
-		model.addAttribute("listCategory", listCategory);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("size", size);
-		model.addAttribute("likename", likeName);
-		model.addAttribute("pages", new int[listCategory.getTotalPages()]);*/
-	   
-	      return "index";
-	   }
-	
-	//Controle des catégories
-	@GetMapping("/category")
-	public String listCategory(Model model) {
-		List<Category> listCategory = categoryRepo.findAll();
-		model.addAttribute("listCategory", listCategory);
-		return "categories";
-		
-	}
-	
-	@GetMapping("/category/new")
-	public String showCategoriesNewForm(Model model) {
-		
-		model.addAttribute("category", new Category());
-		return "categories_form";	
-	}
-	
-	@PostMapping("/category/save")
-	public String saveCategory(@ModelAttribute (name = "category") Category cat, 
-			@RequestParam("picture")MultipartFile multipartFile)throws IOException {
-		
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		cat.setPhoto(fileName);
-		 Category saveCat = categoryRepo.save(cat);
-		 String uploadDir = "./imageBabyShop/" + saveCat.getIdcategory();
-		 
-		 Path uploadPath = Paths.get(uploadDir);
-		 if(!Files.exists(uploadPath)) {
-			 Files.createDirectories(uploadPath);
-		 }
-		 try (InputStream inputStream = multipartFile.getInputStream()){
-			 Path filePath = uploadPath.resolve(fileName);
-			 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-		 }catch(IOException e) {
-			 throw new IOException("Could not save upload file: " + fileName);
-		 }
-		 //FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
-		 
-		  return "redirect:/category";	
-		
-	}
-	
-	
-	// POur les produits
-	
+	@Autowired
+	private ProductRepository productRepo;
 
+	@GetMapping("/")
+	public String home(Model model/*
+									 * , //
+									 * 
+									 * @RequestParam(value = "name", defaultValue = "") String likeName,
+									 * 
+									 * @RequestParam(value = "page", defaultValue = "0") int page,
+									 * 
+									 * @RequestParam(value = "size", defaultValue = "4") int size
+									 */) {
+
+		List<Category> listCategory = categoryRepo.findAll();
+		model.addAttribute("listCategory", listCategory);
+
+		/*
+		 * Page<Category> listCategory = categoryRepo.findByNameCategory(likeName,
+		 * PageRequest.of(page, size)); model.addAttribute("listCategory",
+		 * listCategory); model.addAttribute("currentPage", page);
+		 * model.addAttribute("size", size); model.addAttribute("likename", likeName);
+		 * model.addAttribute("pages", new int[listCategory.getTotalPages()]);
+		 */
+
+		return "index";
+	}
+
+	
+	  //Controle des catégories
+	  
+	  @GetMapping("/category") public String listCategory(Model model) {
+	  List<Category> listCategory = categoryRepo.findAll();
+	  model.addAttribute("listCategory", listCategory); return "categories";
+	  
+	  }
 	 
 
-	
+	/*
+	 * @GetMapping("/category") public String listCategory(Model model , //
+	 * 
+	 * @RequestParam(value = "name", defaultValue = "") String name,
+	 * 
+	 * @RequestParam(value = "page", defaultValue = "0")int page,
+	 * 
+	 * @RequestParam(value = "size", defaultValue = "4") int size) {
+	 * 
+	 * 
+	 * 
+	 * List<Category> listCategory = categoryRepo.findAll();
+	 * model.addAttribute("listCategory", listCategory);
+	 * 
+	 * 
+	 * Page<Category> listCategory = categoryRepo.findByNameCategory(name,
+	 * PageRequest.of(page, size)); model.addAttribute("listCategory",
+	 * listCategory); model.addAttribute("currentPage", page);
+	 * model.addAttribute("size", size); model.addAttribute("name", name);
+	 * model.addAttribute("pages", new int[listCategory.getTotalPages()]);
+	 * 
+	 * return "categories"; }
+	 */
+	@GetMapping("/category/new")
+	public String showCategoriesNewForm(Model model) {
+
+		model.addAttribute("category", new Category());
+		return "categories_form";
+	}
+
+	@PostMapping("/category/save")
+	public String saveCategory(@ModelAttribute(name = "category") Category cat,
+			@RequestParam("picture") MultipartFile multipartFile) throws IOException {
+
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		cat.setPhoto(fileName);
+		Category saveCat = categoryRepo.save(cat);
+		String uploadDir = "./imageBabyShop/" + saveCat.getIdcategory();
+
+		Path uploadPath = Paths.get(uploadDir);
+		if (!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+		}
+		try (InputStream inputStream = multipartFile.getInputStream()) {
+			Path filePath = uploadPath.resolve(fileName);
+			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			throw new IOException("Could not save upload file: " + fileName);
+		}
+		// FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
+
+		return "redirect:/category";
+
+	}
+
+	// POur les produits
+
+	// Liste des produits par category
+
+	/*
+	 * @GetMapping("/category") public String listProductsByCategory(Model model,
+	 * 
+	 * @RequestParam(name="page", defaultValue="0") int page,
+	 * 
+	 * @RequestParam(name="name", defaultValue="") String cat,
+	 * 
+	 * @RequestParam(name="size", defaultValue="2") int size) {
+	 * 
+	 * Page<Product> listProduct = productRepo.searchProductByCategory(cat,
+	 * PageRequest.of(page, size)); model.addAttribute("listProduct", listProduct);
+	 * model.addAttribute("currentPage", page); model.addAttribute("size", size);
+	 * model.addAttribute("name",cat); model.addAttribute("page",new int
+	 * [listProduct.getTotalPages()]);
+	 * 
+	 * 
+	 * List<Product> listProduct = productRepo.findAll();
+	 * model.addAttribute("listProduct", listProduct);
+	 * 
+	 * 
+	 * return "productList"; }
+	 */
+
 }
 
-	/*
-	 * @PostMapping("/category/save") public String saveCategory(@Valid Category
-	 * category, BindingResult bindingResult,
-	 * 
-	 * @RequestParam(name="picture")MultipartFile file) throws
-	 * IllegalStateException, IOException { if(bindingResult.hasErrors()) return
-	 * "categories_form";
-	 * 
-	 * if(!(file.isEmpty())) { //Pour stocker le nom originale de la base de données
-	 * category.setPhoto(file.getOriginalFilename());} categoryrepo.save(category);
-	 * if(!(file.isEmpty())) { category.setPhoto(file.getOriginalFilename());
-	 * file.transferTo(new File(dirImage+category.getIdcategory())); }
-	 * 
-	 * 
-	 * //categoryrepo.save(category); return "redirect:index"; }
-	 */
-	// Methode pour recuprer la photo
-	/*
-	 * @RequestMapping(value="/categoryImage", produces=MediaType.IMAGE_JPEG_VALUE)
-	 * 
-	 * public byte[] getPhoto(Integer id) { File f = new File()); return
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
-	/*@RequestMapping(value = { "/categoryImage" }, method = RequestMethod.GET)
-	   public void categoryImage(HttpServletRequest request, HttpServletResponse response, Model model,
-	         @RequestParam("idCategory") Integer idCategory) throws IOException {
-	     Category category = null;
-	      if (idCategory != null) {
-	    	  category = this.repo.findCategory(idCategory);
-	      }
-	      if (category != null && category.getPhoto() != null) {
-	         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-	         //response.encodeRedirectURL(category.getPhoto());
-	         //getOutputStream().write(0);
-	         response.getOutputStream().write(category.getPhoto());
-	      }
-	      response.getOutputStream().close();
-	   }*/
-	
-
-
+/*
+ * @PostMapping("/category/save") public String saveCategory(@Valid Category
+ * category, BindingResult bindingResult,
+ * 
+ * @RequestParam(name="picture")MultipartFile file) throws
+ * IllegalStateException, IOException { if(bindingResult.hasErrors()) return
+ * "categories_form";
+ * 
+ * if(!(file.isEmpty())) { //Pour stocker le nom originale de la base de données
+ * category.setPhoto(file.getOriginalFilename());} categoryrepo.save(category);
+ * if(!(file.isEmpty())) { category.setPhoto(file.getOriginalFilename());
+ * file.transferTo(new File(dirImage+category.getIdcategory())); }
+ * 
+ * 
+ * //categoryrepo.save(category); return "redirect:index"; }
+ */
+// Methode pour recuprer la photo
+/*
+ * @RequestMapping(value="/categoryImage", produces=MediaType.IMAGE_JPEG_VALUE)
+ * 
+ * public byte[] getPhoto(Integer id) { File f = new File()); return
+ * 
+ * 
+ * 
+ * }
+ */
+/*
+ * @RequestMapping(value = { "/categoryImage" }, method = RequestMethod.GET)
+ * public void categoryImage(HttpServletRequest request, HttpServletResponse
+ * response, Model model,
+ * 
+ * @RequestParam("idCategory") Integer idCategory) throws IOException { Category
+ * category = null; if (idCategory != null) { category =
+ * this.repo.findCategory(idCategory); } if (category != null &&
+ * category.getPhoto() != null) {
+ * response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+ * //response.encodeRedirectURL(category.getPhoto());
+ * //getOutputStream().write(0);
+ * response.getOutputStream().write(category.getPhoto()); }
+ * response.getOutputStream().close(); }
+ */
