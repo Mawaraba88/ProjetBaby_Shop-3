@@ -160,6 +160,8 @@ public class AdminController {
 				 * List<Product> listProduct = productRepo.findAll();
 				 * model.addAttribute("listProduct", listProduct);
 				 */
+			  
+			 
 		  
 		  return "productList"; 
 		  }
