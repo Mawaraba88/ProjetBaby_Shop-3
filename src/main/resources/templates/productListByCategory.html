@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+   <script type="text/javascript" href="/webjars/bootstrap/js/bootstrap.min.js"></script>
+   <head>
+      <meta charset="UTF-8">
+      <title>Liste des produits</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+   </head>
+   <body>
+      <th:block th:include="/_header"></th:block>
+      <th:block th:include="/_menu"></th:block>
+       
+      <div class="page-title">Liste des produits</div>
+      
+        <!-- FOrmulaire du filtre -->
+      <form th:action="@{productsByCategory}" method="get">
+   		 Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required />
+    		&nbsp;
+	    	<input type="submit" value="Search" />
+	    	&nbsp;
+   			 <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+	</form>
+       
+      <div class="product-preview-container" th:each="prodInfo : ${listProduct.content}">
+         <ul>
+           <!--  <li><img class="product-image"
+               th:src="@{|/productImage?code=${prodInfo.code}|}" /></li> -->
+            <li>Code: <span th:text="${prodInfo.code}"></span></li>
+            <li>Nom: <span th:text="${prodInfo.name}"></span></li>
+            <li>Prix: <span th:text="${prodInfo.price}"></span></li>
+              <li>Categorie:<span th:text="${prodInfo.category.nameCategory}"></span></li>
+          <!--   <li>Categorie: <a th:href="@{/productsByCategory(code=${prodInfo.code})}"><span th:text="${prodInfo.category.nameCategory}"></span></a></li> -->
+            
+           <!--  <li><a href="@{'/productsByCategory/'+${prodInfo.category.idcategory}}"><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></a></li> -->
+           
+            <li><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></li>
+           <!--  <li>
+               <a th:href="@{|/buyProduct?code=${prodInfo.code}|}">Acheter</a>
+            </li> -->
+            <!-- For Manager edit Product -->
+            <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
+               <li>
+                 <a style="color:red;"
+                    th:href="@{'/products/edit/'+${prodInfo.code}}">Modifier</a>
+               </li>
+               
+                <li>
+                 <a style="color:red;" 
+                 	onclick="javascript:return confirm('Êtes-vous sûre de vouloir supprimer?')"   
+                    th:href="@{'/products/delete/'+${prodInfo.code}}">Supprimer</a>
+               </li>
+            </th:block>
+         </ul>
+      </div>
+       
+      <br/>
+    
+<!--       <div class="page-navigator" th:if="${paginationProducts.totalPages > 1}"> -->
+<!--          <th:block th:each="page : ${paginationProducts.navigationPages}"> -->
+         
+<!--             <a th:href="@{|/productList?page=${page}|}" th:if="${page != -1}" -->
+<!--                class="nav-item" th:utext="${page}"></a> -->
+               
+<!--             <span class="nav-item" th:if="${page == -1}"> ... </span> -->
+             
+<!--          </th:block> -->
+<!--       </div> -->
+
+  <!-- Pagination -->
+  <ul class="pagination justify-content-center">
+  	<ul class="nav nav-pills">
+  		<li class="page-item"><a class="page-link"
+  		 href="#" tabindex="-1">Précédent</a></li>
+  		 <li th:each="page, status:${page}">
+  		 <a 
+  		 th:class="${status.index==currentPage?'btn btn-secondary':'btn'}"
+  		 th:href="@{productsByCategory(page=${status.index}, size=${size}, name=${name})}"
+  		 th:text="${status.index+1}"></a>
+  		</li>
+  		<li class="page-item"><a class="page-link" href="#">Suivant</a>
+  		
+  		</li>
+  	</ul>
+  
+  </ul>
+  
+ 
+      <th:block th:include="/_footer"></th:block>
+   <script type="text/javascript">
+   		 function clearSearch() {
+        window.location = "[[@{products}]]";
+    	}
+    </script>
+
+   </body>
+</html>
