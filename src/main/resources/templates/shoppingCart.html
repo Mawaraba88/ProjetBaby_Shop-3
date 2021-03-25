@@ -11,13 +11,14 @@
        
       <div class="page-title">Mon panier</div>
        
-      <th:block th:if="${cartForm == null || cartForm.cartLines == null || cartForm.cartLines.empty}">
+      <!-- <th:block th:if="${cartItem == null || cartItem.cartLines == null || cartForm.cartLines.empty}"> -->
+           <th:block th:if="${cartItem == null">
          <h2>Votre panier est vide !!!</h2>
          <a th:href="@{/productList}">Voir les produits</a>
       </th:block>
        
-      <th:block th:if="${cartForm != null && cartForm.cartLines != null && !cartForm.cartLines.empty}">
-         <form method="POST" th:object="${cartForm}" th:action="@{/shoppingCart}">
+      <th:block th:if="${cartItem!= null }">
+         <form method="POST" th:object="${cartItem}" th:action="@{/shoppingCart}">
           
                <div class="product-preview-container"
                         th:each="cartLineInfo, varStatus : ${cartForm.cartLines}">
@@ -57,7 +58,7 @@
             <div style="clear: both"></div>
             <input class="button-update-sc" type="submit" value="Mettre à jour la quantité" />
             <a class="navi-item"
-               th:href="@{/shoppingCartCustomer}">Enter vos informations</a>
+               th:href="@{/shoppingCartCustomer}">Entrer vos informations</a>
             <a class="navi-item"
                th:href="@{/productList}">Continuer les achats</a>
          </form>

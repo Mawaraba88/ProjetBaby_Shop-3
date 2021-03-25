@@ -149,7 +149,7 @@ public class AdminController {
 				  @RequestParam(name="size", defaultValue="2") int size) 
 		  {
 		  
-			  Page<Product> listProduct = productRepo.findByNameContains(name, PageRequest.of(page, size));
+			  Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
 			  model.addAttribute("listProduct", listProduct);
 			  model.addAttribute("currentPage", page);
 			  model.addAttribute("size", size);
@@ -160,13 +160,12 @@ public class AdminController {
 				 * List<Product> listProduct = productRepo.findAll();
 				 * model.addAttribute("listProduct", listProduct);
 				 */
+			  
+			 
 		  
 		  return "productList"; 
 		  }
-		
-
-		
-
+	
 	
 
 		
