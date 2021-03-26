@@ -35,11 +35,11 @@ import projet.babyShop3.repository.CategoryRepository;
 import projet.babyShop3.repository.ProductRepository;
 
 @Controller
-//@Transactional
+
 public class AdminController {
 	@Autowired
 	private ProductRepository productRepo;
-	//private ProductService productService;
+	
 	@Autowired
 	private CategoryRepository categoryRepo;
 	
@@ -67,19 +67,7 @@ public class AdminController {
 	// GET: Show product.// Insertion de nouveaux produits
 	   @RequestMapping(value = { "/product/new" }, method = RequestMethod.GET)
 	   public String product(Model model) {
-	      /*ProductForm productForm = null;
-	 
-	      if (code != null && code.length() > 0) {
-	         Product product = productDAO.findProduct(code);
-	         if (product != null) {
-	            productForm = new ProductForm(product);
-	         }
-	      }
-	      if (productForm == null) {
-	         productForm = new ProductForm();
-	         productForm.setNewProduct(true);
-	      }
-	      model.addAttribute("productForm", productForm);*/
+	    
 		   List<Category> listCategory = categoryRepo.findAll();
 			model.addAttribute("product", new Product());
 			model.addAttribute("listCategory", listCategory);
@@ -88,30 +76,7 @@ public class AdminController {
 	   }
 	   
 		
-		  
-		 
-		/*
-		 * // POST: Save product
-		 * 
-		 * @RequestMapping(value = { "/admin/product" }, method = RequestMethod.POST)
-		 * public String productSave(Model model, //
-		 * 
-		 * @ModelAttribute("productForm") @Validated ProductForm productForm, //
-		 * BindingResult result, // final RedirectAttributes redirectAttributes) {
-		 * 
-		 * if (result.hasErrors()) { return "product"; } try {
-		 * productDAO.save(productForm); } catch (Exception e) { Throwable rootCause =
-		 * ExceptionUtils.getRootCause(e); String message = rootCause.getMessage();
-		 * model.addAttribute("errorMessage", message); // Show product form. return
-		 * "product"; }
-		 * 
-		 * return "redirect:/productList"; }
-		 */
-	   
-		
-	
 	// POST: Save product
-		//@PostMapping("/admin/product")
 		@PostMapping("/products/save")
 		public String saveProduct(@ModelAttribute (name = "product") Product p, 
 				RedirectAttributes ra,
@@ -136,36 +101,11 @@ public class AdminController {
 			 }
 			
 			ra.addFlashAttribute("message", "Ajout reussi");
-			//productRepo.add("listProduct", listProduct);
+			
 			return "redirect:/products";
 			
 		}
 		
-		 // Liste des produits
-		  
-		  @GetMapping("/products")
-		  public String listProducts(Model model,
-				  @RequestParam(name="page", defaultValue="0") int page,
-				  @RequestParam(name="name", defaultValue="") String name,
-				  @RequestParam(name="size", defaultValue="2") int size) 
-		  {
-		  
-			  Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
-			  model.addAttribute("listProduct", listProduct);
-			  model.addAttribute("currentPage", page);
-			  model.addAttribute("size", size);
-			  model.addAttribute("name",name);
-			  model.addAttribute("page",new int [listProduct.getTotalPages()]);
-			  
-				/*
-				 * List<Product> listProduct = productRepo.findAll();
-				 * model.addAttribute("listProduct", listProduct);
-				 */
-			  
-			 
-		  
-		  return "index"; 
-		  }
 	
 	
 

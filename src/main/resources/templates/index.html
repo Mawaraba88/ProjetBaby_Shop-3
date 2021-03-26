@@ -13,7 +13,7 @@
       <div class="page-title">Bienvenue dans l'univers des bouts de choux</div>
      
         <!-- FOrmulaire du filtre -->
-      <form th:action="@{products}" method="get">
+      <form th:action="@{/}" method="get">
    		 Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required />
     		&nbsp;
 	    	<input type="submit" value="Search" />
@@ -21,23 +21,7 @@
    			 <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
 	</form>
        
-      <!-- Liste des catégories -->
-      
-    <!--   <div>
-      <table>
-      		<th:block  th:each="cat:${listCategory}">
-      		
-          	<tr>
-          		<td> <img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></td>
-          		<td th:text="${cat.nameCategory}"></td>
-      		</tr>
-      		</th:block>
-      		
-      
-      </table>
   
-      
-      </div> -->
       
       <div class="container">
        	<div class="row">
@@ -48,7 +32,7 @@
        				<a href="" th:each="cat, iStat : ${listCategory}"
        				th:href="@{/shop/category/{idCat}(idCat=${cat.idcategory})}">
        				<li class="list-group-item" th:text="${cat.nameCategory}"></li>
-       				<!-- <span><img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></span> -->
+       				
        				</a>
        			</ul>
        		</div>
@@ -82,7 +66,7 @@
       
       </div>
       
-  <!--     <ul class="pagination justify-content-center">
+      <ul class="pagination justify-content-center">
   	<ul class="nav nav-pills">
   		<li class="page-item"><a class="page-link"
   		 href="#" tabindex="-1">Précédent</a></li>
@@ -97,10 +81,15 @@
   		</li>
   	</ul>
   
-  </ul>  -->
+  </ul> 
  
       
       <th:block th:include="/_footer"></th:block>
+        <script type="text/javascript">
+   		 function clearSearch() {
+        window.location = "[[@{/}]]";
+    	}
+    </script>
    
    </body>
 </html>
