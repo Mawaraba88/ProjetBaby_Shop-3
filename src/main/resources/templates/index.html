@@ -11,20 +11,24 @@
       <th:block th:include="/_menu"></th:block>
        
       <div class="page-title">Bienvenue dans l'univers des bouts de choux</div>
-      
-      
+     
+        <!-- FOrmulaire du filtre -->
+      <form th:action="@{products}" method="get">
+   		 Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required />
+    		&nbsp;
+	    	<input type="submit" value="Search" />
+	    	&nbsp;
+   			 <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+	</form>
+       
       <!-- Liste des catégories -->
       
-      <div>
+    <!--   <div>
       <table>
       		<th:block  th:each="cat:${listCategory}">
       		
           	<tr>
-          		<!--  <td><img th:src="@{|/categoryImage?idCategory=${Category.idCategory}|}"/></td>
-          			<td<img th:src="${cat.photo}"/></td>-->
-          			<!-- <td><img src="../static/img/imgTest.jpg" width="1000" th:src="@{img/imgTest.jpg}"/></td> -->
-          		<!-- 	<td><img src="@{https://zupimages.net/viewer.php?id=21/11/aqpr.jpg}" width="500" th:src="@{https://zupimages.net/viewer.php?id=21/11/aqpr.jpg}"/></td> -->
-          		<td> <img th:src="@{${cat.photoImagePath}}" /></td>
+          		<td> <img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></td>
           		<td th:text="${cat.nameCategory}"></td>
       		</tr>
       		</th:block>
@@ -33,10 +37,70 @@
       </table>
   
       
+      </div> -->
+      
+      <div class="container">
+       	<div class="row">
+       		<div class="col-sm-3">
+       			<h4>Catégories</h4>	
+       			<ul class="List-group">
+       				<a th:href="@{/}"><li class="list-group-item">Tous les produits</li></a>
+       				<a href="" th:each="cat, iStat : ${listCategory}"
+       				th:href="@{/shop/category/{idCat}(idCat=${cat.idcategory})}">
+       				<li class="list-group-item" th:text="${cat.nameCategory}"></li>
+       				<!-- <span><img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></span> -->
+       				</a>
+       			</ul>
+       		</div>
+       	
+ 			<div class="col-sm-9">
+ 				<div class="card" th:each="prodInfo : ${listProduct}">
+ 					<div class="row no-gutters">
+ 						<div class="col-sm-5 d-flex justity-content-center">
+ 							<!-- <img th:src="@{${prodInfo.imageImagePath}}" width="150px" height="150px" /> -->
+ 						</div>
+ 						<div class="col-sm-5 d-flex justity-content-center">
+ 							<div class="cart-body">
+ 							
+ 								<h5 class="card-title" th:text="${prodInfo.name}"></h5>
+ 								<h4><span th:text="${prodInfo.price}"></span></h4>
+ 								<p><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></p>
+ 								<a href="#" th:href="@{/shop/product/{code}(code=${prodInfo.code})}"  class="btn btn-primary">Voir le produit</a>
+ 							</div>
+ 						
+ 						</div>
+ 					</div>
+ 				</div>
+ 				
+ 			
+ 			</div>      	
+       	
+       	
+       	
+       	</div>
+      
+      
       </div>
       
+  <!--     <ul class="pagination justify-content-center">
+  	<ul class="nav nav-pills">
+  		<li class="page-item"><a class="page-link"
+  		 href="#" tabindex="-1">Précédent</a></li>
+  		 <li th:each="page, status:${page}">
+  		 <a 
+  		 th:class="${status.index==currentPage?'btn btn-secondary':'btn'}"
+  		 th:href="@{/(page=${status.index}, size=${size}, name=${name})}"
+  		 th:text="${status.index+1}"></a>
+  		</li>
+  		<li class="page-item"><a class="page-link" href="#">Suivant</a>
+  		
+  		</li>
+  	</ul>
+  
+  </ul>  -->
+ 
       
       <th:block th:include="/_footer"></th:block>
-       
+   
    </body>
 </html>

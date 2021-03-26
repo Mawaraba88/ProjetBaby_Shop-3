@@ -36,9 +36,7 @@ public class Category {
 	private Byte[] photo;*/
 	@NotEmpty
 	@Column
-	private String photo;
-	
-	
+	private String photo;	
 	@Transient 
 	@OneToMany(mappedBy="category")	
 	private Collection<Product> product;

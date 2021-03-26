@@ -10,6 +10,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -26,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import projet.babyShop3.entity.Category;
 import projet.babyShop3.entity.Product;
+import projet.babyShop3.model.GlobalData;
 import projet.babyShop3.repository.CategoryRepository;
 import projet.babyShop3.repository.ProductRepository;
 
@@ -41,7 +46,7 @@ public class AdminController {
 	
 	   @RequestMapping(value = { "/admin/login" }, method = RequestMethod.GET)
 	   public String login(Model model) {
-	 
+		   GlobalData.cart.clear();
 	      return "login";
 	   }
 	   
@@ -145,7 +150,7 @@ public class AdminController {
 				  @RequestParam(name="size", defaultValue="2") int size) 
 		  {
 		  
-			  Page<Product> listProduct = productRepo.findByNameContains(name, PageRequest.of(page, size));
+			  Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
 			  model.addAttribute("listProduct", listProduct);
 			  model.addAttribute("currentPage", page);
 			  model.addAttribute("size", size);
@@ -156,13 +161,12 @@ public class AdminController {
 				 * List<Product> listProduct = productRepo.findAll();
 				 * model.addAttribute("listProduct", listProduct);
 				 */
+			  
+			 
 		  
-		  return "productList"; 
+		  return "index"; 
 		  }
-		
-
-		
-
+	
 	
 
 		

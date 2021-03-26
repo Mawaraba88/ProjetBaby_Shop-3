@@ -21,8 +21,9 @@ public class Account  implements Serializable{
 	 
     public static final String ROLE_MANAGER = "MANAGER";
     public static final String ROLE_EMPLOYEE = "EMPLOYEE";
+    public static final String ROLE_CUSTOMER = "CUSTOMER";
     
-    
+  
     @Id
     @Column(name = "User_Name", length = 20, nullable = false)
     private String userName;
@@ -105,9 +106,19 @@ public class Account  implements Serializable{
 	public static String getRoleEmployee() {
 		return ROLE_EMPLOYEE;
 	}
-    
-    
 
+
+	public static String getRoleCustomer() {
+		return ROLE_CUSTOMER;
+	}
+    
+    
+	/*
+	 * public Account(Account account) {
+	 * 
+	 * this.userName = account.getUserName(); this.active = active;
+	 * this.encrytedPassword = encrytedPassword; this.userRole = userRole; }
+	 */
 
  
 

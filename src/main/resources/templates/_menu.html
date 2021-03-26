@@ -7,20 +7,17 @@
    Produits
    </a>
    |
+     <th:block sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
     <a th:href="@{/category}">
+      
  	Categories
    </a>
+     </th:block>
    |
    <a th:href="@{/shoppingCart}">
-   Mon panier
+   Mon panier  <span class="nav-link" th:text="${cartCount}">0</span>
    </a>
-   |
-   <th:block sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_EMPLOYEE')">
-      <a th:href="@{/admin/orderList}">
-      Les commandes
-      </a>
-      |
-   </th:block>
+  	
    <th:block sec:authorize="hasRole('ROLE_MANAGER')">
       <a th:href="@{/product/new}">
       Ajout produits
@@ -30,7 +27,10 @@
       <th:block sec:authorize="hasRole('ROLE_MANAGER')">
       <a th:href="@{/category/new}">
       Ajout categories
-      </a>|
+      </a>
+      
+      </th:block>
+      
       
       
 
