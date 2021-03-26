@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import projet.babyShop3.entity.Category;
 import projet.babyShop3.entity.Product;
+import projet.babyShop3.model.GlobalData;
 import projet.babyShop3.repository.CategoryRepository;
 import projet.babyShop3.repository.ProductRepository;
 
@@ -45,7 +46,7 @@ public class AdminController {
 	
 	   @RequestMapping(value = { "/admin/login" }, method = RequestMethod.GET)
 	   public String login(Model model) {
-	 
+		   GlobalData.cart.clear();
 	      return "login";
 	   }
 	   

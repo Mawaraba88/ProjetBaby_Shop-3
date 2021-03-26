@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import projet.babyShop3.entity.Category;
 import projet.babyShop3.entity.Product;
+import projet.babyShop3.model.GlobalData;
 import projet.babyShop3.repository.CategoryRepository;
 import projet.babyShop3.repository.ProductRepository;
 
@@ -45,18 +47,32 @@ public class MainController {
 	private double totalPrice = 0;
 
 	@GetMapping("/")
-	public String home(Model model/*
-									 * , //
-									 * 
-									 * @RequestParam(value = "name", defaultValue = "") String likeName,
-									 * 
-									 * @RequestParam(value = "page", defaultValue = "1")int page,
-									 * 
-									 * @RequestParam(value = "size", defaultValue = "4") int size
-									 */) {
+	public String home(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "name", defaultValue = "") String name,
+			@RequestParam(name = "size", defaultValue = "2") int size/*
+																		 * , //
+																		 * 
+																		 * @RequestParam(value = "name", defaultValue =
+																		 * "") String likeName,
+																		 * 
+																		 * @RequestParam(value = "page", defaultValue =
+																		 * "1")int page,
+																		 * 
+																		 * @RequestParam(value = "size", defaultValue =
+																		 * "4") int size
+																		 */) {
 
+		Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
+		model.addAttribute("listProduct", listProduct);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("size", size);
+		model.addAttribute("name", name);
+		model.addAttribute("page", new int[listProduct.getTotalPages()]);
+		  model.addAttribute("cartCount", GlobalData.cart.size());
 		List<Category> listCategory = categoryRepo.findAll();
 		model.addAttribute("listCategory", listCategory);
+		
+		  
 		/*
 		 * Page<Category> listCategory = repo.findByNameCategory(likeName,
 		 * PageRequest.of(page, size)); model.addAttribute("listCategory",
@@ -73,6 +89,7 @@ public class MainController {
 	public String listCategory(Model model) {
 		List<Category> listCategory = categoryRepo.findAll();
 		model.addAttribute("listCategory", listCategory);
+	
 		return "categories";
 
 	}
@@ -81,6 +98,7 @@ public class MainController {
 	public String showCategoriesNewForm(Model model) {
 
 		model.addAttribute("category", new Category());
+
 		return "categories_form";
 	}
 
@@ -112,86 +130,11 @@ public class MainController {
 	 * 
 	 * return "productListByCategory"; }
 	 */
-	
-	 @PostMapping("/productsByCategory")
-	  public String listProductsByCategory(Model model,
-			  @RequestParam(name="page", defaultValue="0") int page,
-			  @RequestParam(name="name", defaultValue="") String name,
-			  @RequestParam(name="size", defaultValue="2") int size,
-			  @RequestParam(name="idCat", defaultValue="") Integer idcategory) 
-	  {
-	  
-		  Page<Product> listProduct = productRepo.searchProductByCategory(name,idcategory, PageRequest.of(page, size));
-		  model.addAttribute("listProduct", listProduct);
-		  model.addAttribute("currentPage", page);
-		  model.addAttribute("size", size);
-		  model.addAttribute("name",name);
-		  model.addAttribute("idcategory",idcategory);
-		  model.addAttribute("page",new int [listProduct.getTotalPages()]);
-		  
-			/*
-			 * List<Product> listProduct = productRepo.findAll();
-			 * model.addAttribute("listProduct", listProduct);
-			 */
-	  
-	  return "productListByCategory"; 
-	  }
 
 	// Pour faire la validation avec l'annotation @Valid, on ajoute l'attribut
 	// BindingResult
 
-	/*
-	 * @PostMapping("/category/save") public String saveCategory( @ModelAttribute
-	 * (name = "category") Category cat, BindingResult bindingResult,
-	 * 
-	 * @RequestParam("picture")MultipartFile multipartFile)throws IOException {
-	 * 
-	 * String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	 * cat.setPhoto(fileName);
-	 * 
-	 * //condition de verification si les paramètre de validation sont ok
-	 * if(bindingResult.hasErrors()) { return "categories_form"; } Category saveCat
-	 * = categoryRepo.save(cat); String uploadDir = "./imageBabyShop/" +
-	 * saveCat.getIdcategory();
-	 * 
-	 * Path uploadPath = Paths.get(uploadDir); if(!Files.exists(uploadPath)) {
-	 * Files.createDirectories(uploadPath); } try (InputStream inputStream =
-	 * multipartFile.getInputStream()){ Path filePath =
-	 * uploadPath.resolve(fileName); Files.copy(inputStream, filePath,
-	 * StandardCopyOption.REPLACE_EXISTING); }catch(IOException e) { throw new
-	 * IOException("Could not save upload file: " + fileName); }
-	 * //FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
-	 * 
-	 * return "redirect:/category";
-	 * 
-	 * }
-	 */
-
 	// POur les produits
-
-	/*
-	 * @GetMapping("/category") public String listCategory(Model model , //
-	 * 
-	 * @RequestParam(value = "name", defaultValue = "") String name,
-	 * 
-	 * @RequestParam(value = "page", defaultValue = "0")int page,
-	 * 
-	 * @RequestParam(value = "size", defaultValue = "4") int size) {
-	 * 
-	 * 
-	 * 
-	 * List<Category> listCategory = categoryRepo.findAll();
-	 * model.addAttribute("listCategory", listCategory);
-	 * 
-	 * 
-	 * Page<Category> listCategory = categoryRepo.findByNameCategory(name,
-	 * PageRequest.of(page, size)); model.addAttribute("listCategory",
-	 * listCategory); model.addAttribute("currentPage", page);
-	 * model.addAttribute("size", size); model.addAttribute("name", name);
-	 * model.addAttribute("pages", new int[listCategory.getTotalPages()]);
-	 * 
-	 * return "categories"; }
-	 */
 
 	@PostMapping("/category/save")
 	public String saveCategory(@ModelAttribute(name = "category") Category cat,
@@ -218,36 +161,74 @@ public class MainController {
 
 	}
 
+	// Affichage des produits par catégory
+
+	@GetMapping("/shop/category/{idCat}")
+	public String showByCategory(Model model, @PathVariable Category idCat) {
+		List<Product> listProduct = productRepo.findAllProductByCategory(idCat);
+		model.addAttribute("listProduct", listProduct);
+
+		List<Category> listCategory = categoryRepo.findAll();
+		  model.addAttribute("cartCount", GlobalData.cart.size());
+		model.addAttribute("listCategory", listCategory);
+
+		return "index";
+
+	}
+	/*
+	 * //Affichage des produits par ID
+	 * 
+	 * @GetMapping("/shop/product/{code}") public String showViewProduct(Model
+	 * model, //@PathVariable String code
+	 * 
+	 * @RequestParam(name="page", defaultValue="0") int page,
+	 * 
+	 * @RequestParam(name="code", defaultValue="") String code,
+	 * 
+	 * @RequestParam(name="size", defaultValue="2") int size ) { Page<Product>
+	 * listProduct = productRepo.findByCode(code,PageRequest.of(page, size));
+	 * model.addAttribute("listProduct", listProduct);
+	 * 
+	 * 
+	 * List<Category> listCategory = categoryRepo.findAll();
+	 * 
+	 * model.addAttribute("listCategory", listCategory);
+	 * 
+	 * 
+	 * return "productList";
+	 * 
+	 * }
+	 */
+	
+	//Affichage des produits par ID
+	@GetMapping("/shop/product/{code}")
+	public String showViewProduct(Model model,
+		@PathVariable String code
+		 
+			 ) {
+		Product listProduct = productRepo.findByCode(code).get();
+		  model.addAttribute("cartCount", GlobalData.cart.size());
+		model.addAttribute("product", listProduct);
+		 
+		/*
+		 * List<Category> listCategory = categoryRepo.findAll();
+		 * 
+		 * model.addAttribute("listCategory", listCategory);
+		 */
+
+		return "productListView";
+
+	}
+
 	// Pour le panier
 	// Ajout panier
 
-	
-	  @RequestMapping("/buyProduct") public String addShopping(HttpServletRequest
-	  request, Model model,
-	  
-	  @RequestParam(value = "code", defaultValue = "") String code) { if(code !=
-	  null) { Product productCart = productRepo.getOne(code);
-	  listProductCart.add(productCart);
-	  
-	  totalPrice = totalPrice + productCart.getPrice();
-	  
-	  model.addAttribute("listProductCart", listProductCart);
-	  model.addAttribute("totalPrice", totalPrice);
-	  
-	  return "shoppingCart"; } else {
-	  
-	  model.addAttribute("listProductCart", listProductCart);
-	  model.addAttribute("totalPrice", totalPrice);
-	  
-	  return "shoppingCart";
-	  
-	  } }
-	 
 	/*
-	 * @GetMapping("/buyProduct") public String addShopping(Model
-	 * model, @PathVariable("code") String code) { if (code != null)
+	 * @RequestMapping("/buyProduct") public String addShopping(HttpServletRequest
+	 * request, Model model,
 	 * 
-	 * { Product productCart = productRepo.getOne(code);
+	 * @RequestParam(value = "code", defaultValue = "") String code) { if (code !=
+	 * null) { Product productCart = productRepo.getOne(code);
 	 * listProductCart.add(productCart);
 	 * 
 	 * totalPrice = totalPrice + productCart.getPrice();
@@ -265,28 +246,87 @@ public class MainController {
 	 * } }
 	 */
 
-	// Suppression produit du panier
-
 	
-	  @RequestMapping("/shoppingCartRemoveProduct") public String
-	  removeProductHandler(HttpServletRequest request, Model model,
+	  @GetMapping("/buyProduct/{code}") public String addShopping(Model
+	  model, @PathVariable("code") String code) { 
+		  
+		  
+		  GlobalData.cart.add(productRepo.findByCode(code).get());
+		  return "redirect:/";
+			/*
+			 * if (code != null)
+			 * 
+			 * { Product productCart = productRepo.getOne(code);
+			 * listProductCart.add(productCart);
+			 * 
+			 * totalPrice = totalPrice + productCart.getPrice();
+			 * 
+			 * model.addAttribute("listProductCart", listProductCart);
+			 * model.addAttribute("totalPrice", totalPrice);
+			 * 
+			 * return "shoppingCart"; } else {
+			 * 
+			 * model.addAttribute("listProductCart", listProductCart);
+			 * model.addAttribute("totalPrice", totalPrice);
+			 */
 	  
-	  @RequestParam(value = "code", defaultValue = "") String code) {
+	
 	  
-	  for (int i = 0; i < listProductCart.size(); i++) { if(code ==
-	  listProductCart.get(i).getCode()) { totalPrice = totalPrice -
-	  listProductCart.get(i).getPrice(); listProductCart.remove(i); }
+	  } 
 	  
-	  } model.addAttribute("listProductCart", listProductCart);
-	  model.addAttribute("totalPrice", totalPrice);
-	  
-	  return "shoppingCart"; }
-	 
+	  @GetMapping("/shoppingCart")
+	 public String cartGet(Model model) {
+		  model.addAttribute("cartCount", GlobalData.cart.size());
+		  model.addAttribute("total", GlobalData.cart.stream()
+				.mapToDouble(Product::getPrice).sum());
+		  model.addAttribute("cart", GlobalData.cart);
+		  return "shoppingCart";
+	  }
 
+	// Suppression produit du panier
+	/*
+	 * @RequestMapping("/shoppingCartRemoveProduct") public String
+	 * removeProductHandler(HttpServletRequest request, Model model,
+	 * 
+	 * @RequestParam(value = "code", defaultValue = "") String code) {
+	 * 
+	 * for (int i = 0; i < listProductCart.size(); i++) { if (code ==
+	 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
+	 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
+	 * 
+	 * } model.addAttribute("listProductCart", listProductCart);
+	 * model.addAttribute("totalPrice", totalPrice);
+	 * 
+	 * return "shoppingCart"; }
+	 */
+	/*
+	 * @GetMapping("/shoppingCartRemoveProduc/{code}") public String
+	 * cartItemRemove(@PathVariable String code) { GlobalData.cart.remove(code);
+	 * return "redirect:/shoppingCart"; }
+	 */
+	  
+	  @GetMapping("/cart/removeItem/{index}")
+       public String cartItemRemove(@PathVariable int index) {
+    	  GlobalData.cart.remove(index);
+    	   return "redirect:/shoppingCart";
+       }
+	  
+	  @GetMapping("/checkout")
+	  public String checkout(Model model) {
+		  model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getPrice).sum());
+		  return "shoppingCartCustomer";
+	  }
+	  
+	  @GetMapping("/payNow")
+	  public String payNow() {
+		  
+		  
+		  return "redirect:/shoppingCartFinalize";
+	  }
 	/*
 	 * @GetMapping("/shoppingCartRemoveProduct") public String removeProductHandler(
 	 * Model model,
-	 
+	 * 
 	 * String code) {
 	 * 
 	 * for (int i = 0; i < listProductCart.size(); i++) { if(code ==
