@@ -44,23 +44,13 @@ public class MainController {
 	private ProductRepository productRepo;
 
 	List<Product> listProductCart = new ArrayList<>();
-	private double totalPrice = 0;
+
 
 	@GetMapping("/")
 	public String home(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "name", defaultValue = "") String name,
-			@RequestParam(name = "size", defaultValue = "2") int size/*
-																		 * , //
-																		 * 
-																		 * @RequestParam(value = "name", defaultValue =
-																		 * "") String likeName,
-																		 * 
-																		 * @RequestParam(value = "page", defaultValue =
-																		 * "1")int page,
-																		 * 
-																		 * @RequestParam(value = "size", defaultValue =
-																		 * "4") int size
-																		 */) {
+			@RequestParam(name = "size", defaultValue = "2") int size
+																		) {
 
 		Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
 		model.addAttribute("listProduct", listProduct);
@@ -252,7 +242,7 @@ public class MainController {
 		  
 		  
 		  GlobalData.cart.add(productRepo.findByCode(code).get());
-		  return "redirect:/";
+		  return "redirect:/shoppingCart";
 			/*
 			 * if (code != null)
 			 * 

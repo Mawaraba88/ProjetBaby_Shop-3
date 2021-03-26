@@ -11,7 +11,16 @@
       <th:block th:include="/_menu"></th:block>
        
       <div class="page-title">Bienvenue dans l'univers des bouts de choux</div>
-    
+     
+        <!-- FOrmulaire du filtre -->
+      <form th:action="@{products}" method="get">
+   		 Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required />
+    		&nbsp;
+	    	<input type="submit" value="Search" />
+	    	&nbsp;
+   			 <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+	</form>
+       
       <!-- Liste des catégories -->
       
     <!--   <div>
@@ -39,7 +48,7 @@
        				<a href="" th:each="cat, iStat : ${listCategory}"
        				th:href="@{/shop/category/{idCat}(idCat=${cat.idcategory})}">
        				<li class="list-group-item" th:text="${cat.nameCategory}"></li>
-       				<span><img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></span>
+       				<!-- <span><img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></span> -->
        				</a>
        			</ul>
        		</div>
@@ -48,7 +57,7 @@
  				<div class="card" th:each="prodInfo : ${listProduct}">
  					<div class="row no-gutters">
  						<div class="col-sm-5 d-flex justity-content-center">
- 							<img th:src="@{${prodInfo.imageImagePath}}" width="150px" height="150px" />
+ 							<!-- <img th:src="@{${prodInfo.imageImagePath}}" width="150px" height="150px" /> -->
  						</div>
  						<div class="col-sm-5 d-flex justity-content-center">
  							<div class="cart-body">
@@ -73,7 +82,7 @@
       
       </div>
       
-      <ul class="pagination justify-content-center">
+  <!--     <ul class="pagination justify-content-center">
   	<ul class="nav nav-pills">
   		<li class="page-item"><a class="page-link"
   		 href="#" tabindex="-1">Précédent</a></li>
@@ -88,7 +97,7 @@
   		</li>
   	</ul>
   
-  </ul> 
+  </ul>  -->
  
       
       <th:block th:include="/_footer"></th:block>

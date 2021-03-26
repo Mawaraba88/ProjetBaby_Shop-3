@@ -164,7 +164,7 @@ public class AdminController {
 			  
 			 
 		  
-		  return "productList"; 
+		  return "index"; 
 		  }
 	
 	
