@@ -7,7 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +22,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -188,30 +194,90 @@ public class MainController {
 	}
 	
 	//Pour le panier
+	// Ajout panier
 	
-	@PostMapping("/shoppingCart")
-	public String addShopping(Model model, String code) {
-		if(code != null) {
-			Product productCart = productRepo.getOne(code);
-			listProductCart.add(productCart);
-			
-			totalPrice = totalPrice + productCart.getPrice();
-			
-			model.addAttribute("listProductCart", listProductCart);
-			model.addAttribute("totalPrice", totalPrice);
-			
-			return "shoppingCart";
-		}
-		else {			
-
-			model.addAttribute("listProductCart", listProductCart);
-			model.addAttribute("totalPrice", totalPrice);
-			
-			return "shoppingCart";
-		
-		}
-	}
+	/*
+	 * @RequestMapping("/buyProduct") public String addShopping(HttpServletRequest
+	 * request, Model model,
+	 * 
+	 * @RequestParam(value = "code", defaultValue = "") String code) { if(code !=
+	 * null) { Product productCart = productRepo.getOne(code);
+	 * listProductCart.add(productCart);
+	 * 
+	 * totalPrice = totalPrice + productCart.getPrice();
+	 * 
+	 * model.addAttribute("listProductCart", listProductCart);
+	 * model.addAttribute("totalPrice", totalPrice);
+	 * 
+	 * return "shoppingCart"; } else {
+	 * 
+	 * model.addAttribute("listProductCart", listProductCart);
+	 * model.addAttribute("totalPrice", totalPrice);
+	 * 
+	 * return "shoppingCart";
+	 * 
+	 * } }
+	 */
+	 
 	
+	
+	
+	  @GetMapping("/buyProduct/{code}") 
+	  public String addShopping(Model model, @PathVariable("code")String
+	  code) { if(code != null)
+	  
+	  { Product productCart = productRepo.getOne(code);
+	  listProductCart.add(productCart);
+	  
+	  totalPrice = totalPrice + productCart.getPrice();
+	  
+	  model.addAttribute("listProductCart", listProductCart);
+	  model.addAttribute("totalPrice", totalPrice);
+	  
+	  return "shoppingCart"; } else {
+	  
+	  model.addAttribute("listProductCart", listProductCart);
+	  model.addAttribute("totalPrice", totalPrice);
+	  
+	  return "shoppingCart";
+	  
+	  } }
+	 
+	  //Suppression produit du panier
+	  
+		/*
+		 * @RequestMapping("/shoppingCartRemoveProduct") public String
+		 * removeProductHandler(HttpServletRequest request, Model model,
+		 * 
+		 * @RequestParam(value = "code", defaultValue = "") String code) {
+		 * 
+		 * for (int i = 0; i < listProductCart.size(); i++) { if(code ==
+		 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
+		 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
+		 * 
+		 * } model.addAttribute("listProductCart", listProductCart);
+		 * model.addAttribute("totalPrice", totalPrice);
+		 * 
+		 * return "shoppingCart"; }
+		 */
+		 
+	  
+		/*
+		 * @GetMapping("/shoppingCartRemoveProduct") public String removeProductHandler(
+		 * Model model,
+		 * 
+		 * String code) {
+		 * 
+		 * for (int i = 0; i < listProductCart.size(); i++) { if(code ==
+		 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
+		 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
+		 * 
+		 * } model.addAttribute("listProductCart", listProductCart);
+		 * model.addAttribute("totalPrice", totalPrice);
+		 * 
+		 * return "shoppingCart"; }
+		 */
+	 
 	
 }
 

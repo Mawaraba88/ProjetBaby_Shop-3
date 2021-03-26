@@ -2,8 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
    <head>
       <meta charset="UTF-8">
+      <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+   
       <title>Mon panier</title>
       <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+      <script type="text/javascript" href="/webjars/bootstrap/js/bootstrap.min.js"></script>
    </head>
    <body>
       <th:block th:include="/_header"></th:block>
@@ -12,10 +15,95 @@
       <div class="page-title">Mon panier</div>
        
       <!-- <th:block th:if="${cartItem == null || cartItem.cartLines == null || cartForm.cartLines.empty}"> -->
-           <th:block th:if="${cartItem == null">
-         <h2>Votre panier est vide !!!</h2>
-         <a th:href="@{/productList}">Voir les produits</a>
-      </th:block>
+           <!-- <th:block th:if="${cartItem == null"> -->
+      <!--    <h2>Votre panier est vide !!!</h2>
+         <a th:href="@{/productList}">Voir les produits</a> -->
+         
+         <div class="form-row justify-center">
+         	<div class="col-lg-7">
+         	
+         		<div class="card mt-2 ml-5">
+         			
+					<div class="car-body">
+						<table class="table">
+							<tr>
+								<th>Nom</th>
+								<th>Prix</th>
+								<th>Catégorie</th>
+								<th>Photo</th>
+							</tr>
+					
+							<tr th:each="prodInfo : ${listProductCart}">
+								<td th:text="${prodInfo.name}"></td>
+								<td th:text="${prodInfo.price}"></td>
+								<td th:text="${prodInfo.category.nameCategory}"></td>
+								<td><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></td>
+								
+								<td> <a 
+									onclick="javascript:return confirm('Êtes-vous sûre de vouloir supprimer ce produit?')"
+									class="btn btn-danger"
+									th:href="@{|/shoppingCartRemoveProduct?code=${prodInfo.code}|}"></a>Supprimer</td>
+							</tr>
+						</table>
+				
+					</div>         		
+         		</div> 	
+         	</div>
+     
+         </div>
+         
+         <!-- Recapitulatif -->
+         
+          <div class="col-lg-4">
+         	<div class="cart-mt-1 m1-5">
+         	
+         		<div class="car-body">
+         			<table class="table" id="table_Recap">
+         				<tr>
+         					<th colspan="2">RECAPITULATIF</th>
+         				</tr>
+         				
+         				<tr>
+         					<td>Panier</td>
+         					<td><span th:text="${totalPrice} + '€'"></span></td>
+         				
+         				</tr>
+         				<tr>
+         					<td>Frais de livraison</td>
+         					<td> Gratuit</td>
+         				
+         				</tr>
+         			
+         				<tr>
+         					<td style="font-weight: bold;">TOTAL</td>
+         					<td style="font-weight: bold;"><span  th:text="${totalPrice} + '€'"></span></td>
+         				
+         				</tr>
+         			
+         			</table>
+         		</div>
+         </div>
+       </div>
+           <!-- Pagination -->
+  <ul class="pagination justify-content-center">
+  	<ul class="nav nav-pills">
+  		<li class="page-item"><a class="page-link"
+  		 href="#" tabindex="-1">Précédent</a></li>
+  		 <li th:each="page, status:${page}">
+  		 <a 
+  		 th:class="${status.index==currentPage?'btn btn-secondary':'btn'}"
+  		 th:href="@{products(page=${status.index}, size=${size}, name=${name})}"
+  		 th:text="${status.index+1}"></a>
+  		</li>
+  		<li class="page-item"><a class="page-link" href="#">Suivant</a>
+  		
+  		</li>
+  	</ul>
+  
+  </ul>
+         
+         
+      <!-- </th:block>
        
       <th:block th:if="${cartItem!= null }">
          <form method="POST" th:object="${cartItem}" th:action="@{/shoppingCart}">
@@ -62,7 +150,7 @@
             <a class="navi-item"
                th:href="@{/productList}">Continuer les achats</a>
          </form>
-      </th:block>
+      </th:block> -->
        
       <th:block th:include="/_footer"></th:block>
        
