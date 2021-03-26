@@ -49,10 +49,10 @@ public class MainController {
 	@GetMapping("/")
 	public String home(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "name", defaultValue = "") String name,
-			@RequestParam(name = "size", defaultValue = "2") int size
+			@RequestParam(name = "size", defaultValue = "4") int size
 																		) {
 
-		Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
+		Page<Product> listProduct = productRepo.findByNameContains(name, PageRequest.of(page, size));
 		model.addAttribute("listProduct", listProduct);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("size", size);
@@ -62,17 +62,29 @@ public class MainController {
 		List<Category> listCategory = categoryRepo.findAll();
 		model.addAttribute("listCategory", listCategory);
 		
-		  
-		/*
-		 * Page<Category> listCategory = repo.findByNameCategory(likeName,
-		 * PageRequest.of(page, size)); model.addAttribute("listCategory",
-		 * listCategory); model.addAttribute("currentPage", page);
-		 * model.addAttribute("size", size); model.addAttribute("likename", likeName);
-		 * model.addAttribute("pages", new int[listCategory.getTotalPages()]);
-		 */
 
 		return "index";
 	}
+	
+
+	 // Liste des produits
+	  
+	  @GetMapping("/products")
+	  public String listProducts(Model model,
+			  @RequestParam(name="page", defaultValue="0") int page,
+			  @RequestParam(name="name", defaultValue="") String name,
+			  @RequestParam(name="size", defaultValue="4") int size) 
+	  {
+	  
+		  Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
+		  model.addAttribute("listProduct", listProduct);
+		  model.addAttribute("currentPage", page);
+		  model.addAttribute("size", size);
+		  model.addAttribute("name",name);
+		  model.addAttribute("page",new int [listProduct.getTotalPages()]);
+		 
+	  return "productList"; 
+	  }
 
 	// Controle des catégories
 	@GetMapping("/category")

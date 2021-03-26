@@ -16,16 +16,13 @@
      
       <div class="product-preview-container" th:each="prodInfo : ${listProduct.content}">
          <ul>
-           <!--  <li><img class="product-image"
-               th:src="@{|/productImage?code=${prodInfo.code}|}" /></li> -->
+           
             <li>Code: <span th:text="${prodInfo.code}"></span></li>
             <li>Nom: <span th:text="${prodInfo.name}"></span></li>
             <li>Prix: <span th:text="${prodInfo.price}"></span></li>
             <li>Categorie: <span th:text="${prodInfo.category.nameCategory}"></span></li>
             <li><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></li>
-            <li>
-               <a th:href="@{|/buyProduct?code=${prodInfo.code}|}">Ajouter au panier</a>
-            </li>
+         
             <!-- For Manager edit Product -->
             <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
                <li>
@@ -43,18 +40,8 @@
       </div>
        
       <br/>
-    
-      <!-- <div class="page-navigator" th:if="${paginationProducts.totalPages > 1}">
-         <th:block th:each="page : ${paginationProducts.navigationPages}">
-         
-            <a th:href="@{|/productList?page=${page}|}" th:if="${page != -1}"
-               class="nav-item" th:utext="${page}"></a>
-               
-            <span class="nav-item" th:if="${page == -1}"> ... </span>
-             
-         </th:block>
-      </div> -->
-
+ 
+   
   <!-- Pagination -->
   <ul class="pagination justify-content-center">
   	<ul class="nav nav-pills">
