@@ -113,7 +113,12 @@ public class Account  implements Serializable{
 	}
     
     
-
+	/*
+	 * public Account(Account account) {
+	 * 
+	 * this.userName = account.getUserName(); this.active = active;
+	 * this.encrytedPassword = encrytedPassword; this.userRole = userRole; }
+	 */
 
  
 
