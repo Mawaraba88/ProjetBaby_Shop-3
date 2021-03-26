@@ -15,13 +15,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="category")
-/*
- * @Data
- * 
- * @AllArgsConstructor
- * 
- * @NoArgsConstructor
- */
+
 public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,16 +26,12 @@ public class Category {
 	@Column(name = "nameCategory", length = 20, nullable = false)
 	private String nameCategory;
 
-	/*@Lob
-	private Byte[] photo;*/
 	@NotEmpty
 	@Column
 	private String photo;	
 	@Transient 
 	@OneToMany(mappedBy="category")	
 	private Collection<Product> product;
-
-
 
 	public Category() {
 		super();

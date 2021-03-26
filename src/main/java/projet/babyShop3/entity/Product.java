@@ -27,7 +27,6 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = -1000119078147252957L;
 	 
     @Id
-    //@GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Code", length = 20, nullable = false)
     private String code;
  
@@ -41,7 +40,6 @@ public class Product implements Serializable {
     @Column(name = "Image", length = Integer.MAX_VALUE, nullable = true)
     private String image;
      
-   // @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "Create_Date", nullable = true)
     private Date createDate;
@@ -50,12 +48,7 @@ public class Product implements Serializable {
 	 
 	  @JoinColumn(name="idcategory") 
 	  private Category category;
-	 
-    
-  
-    
-    
-    
+	
 	public Product(String code, String name, double price, Category category) {
 		super();
 		this.code = code;

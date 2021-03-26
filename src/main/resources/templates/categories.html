@@ -9,7 +9,6 @@
 
 	    
       <th:block th:include="/_header"></th:block>
-      <th:block th:include="/_menu"></th:block>
       
 	<div class="container text-center">
 		<div>
@@ -54,19 +53,12 @@
   		 th:href="@{listCategory(page=${status.index}, size=${size}, name=${name})}"
   		 th:text="${status.index+1}"></a>
   		</li>
-  		<li class="page-item"><a class="page-link" href="#">Suivant</a>
-  		
-  		</li>
+  		<li class="page-item"><a class="page-link" href="#">Suivant</a></li>
   	</ul>
   
   </ul>
-		
-
 
   <th:block th:include="/_footer"></th:block>
-
-	
-	
 
 </body>
 </html>

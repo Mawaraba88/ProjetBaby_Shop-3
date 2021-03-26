@@ -8,9 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import projet.babyShop3.entity.Account;
 
 public class CustomUserDetail extends Account implements UserDetails {
-	/*
-	 * public CustomUserDetail(Account account) { super(account); }
-	 */
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
@@ -49,7 +47,6 @@ public class CustomUserDetail extends Account implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

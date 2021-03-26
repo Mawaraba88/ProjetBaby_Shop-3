@@ -13,8 +13,6 @@ import projet.babyShop3.entity.Product;
 
 public interface ProductRepository extends JpaRepository<Product, String> {
 
-	
-
 	@Query("SELECT p FROM Product p WHERE " + "CONCAT(p.code, p.name, p.price)" + "LIKE %?1%")
 	public Page<Product> findByNameContains(String keyword, Pageable pageable);
 	@Query("SELECT p FROM Product p WHERE " + "CONCAT(p.code, p.name, p.price)" + "LIKE %?1%")
