@@ -111,16 +111,4 @@ public class Account  implements Serializable{
 	public static String getRoleCustomer() {
 		return ROLE_CUSTOMER;
 	}
-    
-    
-	/*
-	 * public Account(Account account) {
-	 * 
-	 * this.userName = account.getUserName(); this.active = active;
-	 * this.encrytedPassword = encrytedPassword; this.userRole = userRole; }
-	 */
-
- 
-
-    
 }

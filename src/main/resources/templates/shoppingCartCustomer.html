@@ -7,60 +7,36 @@
    </head>
    <body>
       <th:block th:include="/_header"></th:block>
-      <th:block th:include="/_menu"></th:block>
        
       <div class="page-title">Entrer vos informations</div>
        
        <div class="container">
 
-    <!--Section: Block Content-->
     <section class="mt-5 mb-4">
 
-        <!--Grid row-->
         <div class="row">
-
-            <!--Grid column-->
             <div class="col-lg-8 mb-4">
-
-                <!-- Card -->
                 <div class="card wish-list pb-1">
                     <div class="card-body">
 
                         <h5 class="mb-2">Vos informations</h5>
-
-                        <!-- Grid row -->
                         <div class="row">
-
-                            <!-- Grid column -->
                             <div class="col-lg-6">
-
-                                <!-- First name -->
                                 <div class="md-form md-outline mb-0 mb-lg-4">
                                     <label for="firstName">Prenom</label>
                                     <input type="text" id="firstName" required class="form-control mb-0 mb-lg-2">
                                 </div>
 
                             </div>
-                            <!-- Grid column -->
-
-                            <!-- Grid column -->
                             <div class="col-lg-6">
-
-                                <!-- Last name -->
                                 <div class="md-form md-outline">
                                     <label for="lastName">Nom</label>
                                     <input type="text" id="lastName" required class="form-control">
                                 </div>
 
                             </div>
-                            <!-- Grid column -->
 
                         </div>
-                        <!-- Grid row -->
-
-
-
-                        <!-- Country -->
                         <div class="d-flex flex-wrap">
                             <div class="select-outline position-relative w-100">
                                 <label>Pays - <strong>France</strong></label>
@@ -68,15 +44,10 @@
 
                             </div>
                         </div>
-
-                        <!-- Address Part 1 -->
                         <div class="md-form md-outline mt-2">
                             <label for="form14">Addresse </label>
                             <input type="text" required id="form14" placeholder="House number and street name" class="form-control">
                         </div>
-
-               
-                 
 
                         <!-- Phone -->
                         <div class="md-form md-outline mt-2">
@@ -94,25 +65,20 @@
                             <label for="form14">Numero de carte bancaire </label>
                             <input type="text" required id="form14" placeholder="numero de carte bancaire" class="form-control">
                         </div>
+                        <div class="md-form md-outline mt-2">
+                            <label for="form14">Date d'expiration </label>
+                            <input type="text" required id="form14" placeholder="Date d'expiration" class="form-control">
+                        </div>
                         
 						 <div class="md-form md-outline mt-2">
                             <label for="form14">Cryptogramme </label>
                             <input type="text" required id="form14" placeholder="CVC" class="form-control">
                         </div>
-                      
-
-
                     </div>
                 </div>
-                <!-- Card -->
 
             </div>
-            <!--Grid column-->
-
-            <!--Grid column-->
             <div class="col-lg-4">
-
-                <!-- Card -->
                 <div class="card mb-4">
                     <div class="card-body">
 
@@ -144,9 +110,6 @@
 
                     </div>
                 </div>
-                <!-- Card -->
-
-                <!-- Card -->
                 <div class="card mb-4">
                     <div class="card-body">
 
@@ -166,9 +129,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- Card -->
-       
-
        
       <th:block th:include="/_footer"></th:block>
        
