@@ -33,6 +33,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
 	@Query("SELECT p FROM Product p WHERE " + "CONCAT(p.code, p.name, p.price)" + "LIKE %?1%")
 	public Page<Product> findAll(String keyword, Pageable pageable);
+	
+	/* public Page<Product> findAllProductByCategoryId(Integer idCat); */
 
 	/*
 	 * //Selections des produits d'une categorie donnée
@@ -56,6 +58,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	public Page<Product> findByCode(String code, Pageable pageable);
 	  // POur une requête complexe;
+		
 		
 		  @Query("select p from Product p where p.name like :x and p.category.idcategory like :y"
 		  ) public Page<Product> searchProductByCategory(@Param("x") String

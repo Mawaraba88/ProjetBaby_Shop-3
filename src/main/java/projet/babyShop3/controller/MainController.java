@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,53 +37,83 @@ import projet.babyShop3.repository.ProductRepository;
 public class MainController {
 	@Autowired
 	private CategoryRepository categoryRepo;
-	
+
 	@Autowired
 	private ProductRepository productRepo;
-	
+
 	List<Product> listProductCart = new ArrayList<>();
 	private double totalPrice = 0;
 
 	@GetMapping("/")
-	   public String home(Model model/*, //
-		         @RequestParam(value = "name", defaultValue = "") String likeName,
-		         @RequestParam(value = "page", defaultValue = "1")int page,
-		         @RequestParam(value = "size", defaultValue = "4") int size*/) {
-		
-		
+	public String home(Model model/*
+									 * , //
+									 * 
+									 * @RequestParam(value = "name", defaultValue = "") String likeName,
+									 * 
+									 * @RequestParam(value = "page", defaultValue = "1")int page,
+									 * 
+									 * @RequestParam(value = "size", defaultValue = "4") int size
+									 */) {
+
 		List<Category> listCategory = categoryRepo.findAll();
 		model.addAttribute("listCategory", listCategory);
-		/*Page<Category> listCategory = repo.findByNameCategory(likeName, PageRequest.of(page, size));
-		model.addAttribute("listCategory", listCategory);
-		model.addAttribute("currentPage", page);
-		model.addAttribute("size", size);
-		model.addAttribute("likename", likeName);
-		model.addAttribute("pages", new int[listCategory.getTotalPages()]);*/
-	   
-	      return "index";
-	   }
-	
-	//Controle des catégories
+		/*
+		 * Page<Category> listCategory = repo.findByNameCategory(likeName,
+		 * PageRequest.of(page, size)); model.addAttribute("listCategory",
+		 * listCategory); model.addAttribute("currentPage", page);
+		 * model.addAttribute("size", size); model.addAttribute("likename", likeName);
+		 * model.addAttribute("pages", new int[listCategory.getTotalPages()]);
+		 */
+
+		return "index";
+	}
+
+	// Controle des catégories
 	@GetMapping("/category")
 	public String listCategory(Model model) {
 		List<Category> listCategory = categoryRepo.findAll();
 		model.addAttribute("listCategory", listCategory);
 		return "categories";
-		
+
 	}
-	
+
 	@GetMapping("/category/new")
 	public String showCategoriesNewForm(Model model) {
-		
-		model.addAttribute("category", new Category());
-		return "categories_form";	
-	}
-	
-	
 
-	 // Liste des produits par catégorie
-	  
-	  @GetMapping("productsByCategory/{idcategory}")
+		model.addAttribute("category", new Category());
+		return "categories_form";
+	}
+
+	// Liste des produits par catégorie
+
+	/*
+	 * @GetMapping("productsByCategory/{idcategory}") public String
+	 * listProductsByCategory(Model model,
+	 * 
+	 * @RequestParam(name="page", defaultValue="0") int page,
+	 * 
+	 * @RequestParam(name="name", defaultValue="") String name,
+	 * 
+	 * @RequestParam(name="size", defaultValue="2") int size,
+	 * 
+	 * @RequestParam(name="idCat", defaultValue="") Integer idcategory) {
+	 * 
+	 * Page<Product> listProduct =
+	 * productRepo.searchProductByCategory(name,idcategory, PageRequest.of(page,
+	 * size)); model.addAttribute("listProduct", listProduct);
+	 * model.addAttribute("currentPage", page); model.addAttribute("size", size);
+	 * model.addAttribute("name",name); model.addAttribute("idcategory",idcategory);
+	 * model.addAttribute("page",new int [listProduct.getTotalPages()]);
+	 * 
+	 * 
+	 * List<Product> listProduct = productRepo.findAll();
+	 * model.addAttribute("listProduct", listProduct);
+	 * 
+	 * 
+	 * return "productListByCategory"; }
+	 */
+	
+	 @PostMapping("/productsByCategory")
 	  public String listProductsByCategory(Model model,
 			  @RequestParam(name="page", defaultValue="0") int page,
 			  @RequestParam(name="name", defaultValue="") String name,
@@ -108,8 +137,9 @@ public class MainController {
 	  return "productListByCategory"; 
 	  }
 
-	//Pour faire la validation avec l'annotation @Valid, on ajoute l'attribut BindingResult
-	
+	// Pour faire la validation avec l'annotation @Valid, on ajoute l'attribut
+	// BindingResult
+
 	/*
 	 * @PostMapping("/category/save") public String saveCategory( @ModelAttribute
 	 * (name = "category") Category cat, BindingResult bindingResult,
@@ -136,12 +166,8 @@ public class MainController {
 	 * 
 	 * }
 	 */
-	
+
 	// POur les produits
-	
-	
-
-
 
 	/*
 	 * @GetMapping("/category") public String listCategory(Model model , //
@@ -166,7 +192,6 @@ public class MainController {
 	 * 
 	 * return "categories"; }
 	 */
-	
 
 	@PostMapping("/category/save")
 	public String saveCategory(@ModelAttribute(name = "category") Category cat,
@@ -192,41 +217,16 @@ public class MainController {
 		return "redirect:/category";
 
 	}
-	
-	//Pour le panier
+
+	// Pour le panier
 	// Ajout panier
+
 	
-	/*
-	 * @RequestMapping("/buyProduct") public String addShopping(HttpServletRequest
-	 * request, Model model,
-	 * 
-	 * @RequestParam(value = "code", defaultValue = "") String code) { if(code !=
-	 * null) { Product productCart = productRepo.getOne(code);
-	 * listProductCart.add(productCart);
-	 * 
-	 * totalPrice = totalPrice + productCart.getPrice();
-	 * 
-	 * model.addAttribute("listProductCart", listProductCart);
-	 * model.addAttribute("totalPrice", totalPrice);
-	 * 
-	 * return "shoppingCart"; } else {
-	 * 
-	 * model.addAttribute("listProductCart", listProductCart);
-	 * model.addAttribute("totalPrice", totalPrice);
-	 * 
-	 * return "shoppingCart";
-	 * 
-	 * } }
-	 */
-	 
-	
-	
-	
-	  @GetMapping("/buyProduct/{code}") 
-	  public String addShopping(Model model, @PathVariable("code")String
-	  code) { if(code != null)
+	  @RequestMapping("/buyProduct") public String addShopping(HttpServletRequest
+	  request, Model model,
 	  
-	  { Product productCart = productRepo.getOne(code);
+	  @RequestParam(value = "code", defaultValue = "") String code) { if(code !=
+	  null) { Product productCart = productRepo.getOne(code);
 	  listProductCart.add(productCart);
 	  
 	  totalPrice = totalPrice + productCart.getPrice();
@@ -243,72 +243,90 @@ public class MainController {
 	  
 	  } }
 	 
-	  //Suppression produit du panier
-	  
-		/*
-		 * @RequestMapping("/shoppingCartRemoveProduct") public String
-		 * removeProductHandler(HttpServletRequest request, Model model,
-		 * 
-		 * @RequestParam(value = "code", defaultValue = "") String code) {
-		 * 
-		 * for (int i = 0; i < listProductCart.size(); i++) { if(code ==
-		 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
-		 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
-		 * 
-		 * } model.addAttribute("listProductCart", listProductCart);
-		 * model.addAttribute("totalPrice", totalPrice);
-		 * 
-		 * return "shoppingCart"; }
-		 */
-		 
-	  
-		/*
-		 * @GetMapping("/shoppingCartRemoveProduct") public String removeProductHandler(
-		 * Model model,
-		 * 
-		 * String code) {
-		 * 
-		 * for (int i = 0; i < listProductCart.size(); i++) { if(code ==
-		 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
-		 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
-		 * 
-		 * } model.addAttribute("listProductCart", listProductCart);
-		 * model.addAttribute("totalPrice", totalPrice);
-		 * 
-		 * return "shoppingCart"; }
-		 */
-	 
-	
-}
-
-	// POur les produits
-
-	// Liste des produits par category
-
 	/*
-	 * @GetMapping("/category") public String listProductsByCategory(Model model,
+	 * @GetMapping("/buyProduct") public String addShopping(Model
+	 * model, @PathVariable("code") String code) { if (code != null)
 	 * 
-	 * @RequestParam(name="page", defaultValue="0") int page,
+	 * { Product productCart = productRepo.getOne(code);
+	 * listProductCart.add(productCart);
 	 * 
-	 * @RequestParam(name="name", defaultValue="") String cat,
+	 * totalPrice = totalPrice + productCart.getPrice();
 	 * 
-	 * @RequestParam(name="size", defaultValue="2") int size) {
+	 * model.addAttribute("listProductCart", listProductCart);
+	 * model.addAttribute("totalPrice", totalPrice);
 	 * 
-	 * Page<Product> listProduct = productRepo.searchProductByCategory(cat,
-	 * PageRequest.of(page, size)); model.addAttribute("listProduct", listProduct);
-	 * model.addAttribute("currentPage", page); model.addAttribute("size", size);
-	 * model.addAttribute("name",cat); model.addAttribute("page",new int
-	 * [listProduct.getTotalPages()]);
+	 * return "shoppingCart"; } else {
 	 * 
+	 * model.addAttribute("listProductCart", listProductCart);
+	 * model.addAttribute("totalPrice", totalPrice);
 	 * 
-	 * List<Product> listProduct = productRepo.findAll();
-	 * model.addAttribute("listProduct", listProduct);
+	 * return "shoppingCart";
 	 * 
-	 * 
-	 * return "productList"; }
+	 * } }
 	 */
 
+	// Suppression produit du panier
 
+	
+	  @RequestMapping("/shoppingCartRemoveProduct") public String
+	  removeProductHandler(HttpServletRequest request, Model model,
+	  
+	  @RequestParam(value = "code", defaultValue = "") String code) {
+	  
+	  for (int i = 0; i < listProductCart.size(); i++) { if(code ==
+	  listProductCart.get(i).getCode()) { totalPrice = totalPrice -
+	  listProductCart.get(i).getPrice(); listProductCart.remove(i); }
+	  
+	  } model.addAttribute("listProductCart", listProductCart);
+	  model.addAttribute("totalPrice", totalPrice);
+	  
+	  return "shoppingCart"; }
+	 
+
+	/*
+	 * @GetMapping("/shoppingCartRemoveProduct") public String removeProductHandler(
+	 * Model model,
+	 
+	 * String code) {
+	 * 
+	 * for (int i = 0; i < listProductCart.size(); i++) { if(code ==
+	 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
+	 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
+	 * 
+	 * } model.addAttribute("listProductCart", listProductCart);
+	 * model.addAttribute("totalPrice", totalPrice);
+	 * 
+	 * return "shoppingCart"; }
+	 */
+
+}
+
+// POur les produits
+
+// Liste des produits par category
+
+/*
+ * @GetMapping("/category") public String listProductsByCategory(Model model,
+ * 
+ * @RequestParam(name="page", defaultValue="0") int page,
+ * 
+ * @RequestParam(name="name", defaultValue="") String cat,
+ * 
+ * @RequestParam(name="size", defaultValue="2") int size) {
+ * 
+ * Page<Product> listProduct = productRepo.searchProductByCategory(cat,
+ * PageRequest.of(page, size)); model.addAttribute("listProduct", listProduct);
+ * model.addAttribute("currentPage", page); model.addAttribute("size", size);
+ * model.addAttribute("name",cat); model.addAttribute("page",new int
+ * [listProduct.getTotalPages()]);
+ * 
+ * 
+ * List<Product> listProduct = productRepo.findAll();
+ * model.addAttribute("listProduct", listProduct);
+ * 
+ * 
+ * return "productList"; }
+ */
 
 // POur les l'achat
 
