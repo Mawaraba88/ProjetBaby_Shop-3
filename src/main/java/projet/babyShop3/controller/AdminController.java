@@ -39,100 +39,100 @@ import projet.babyShop3.repository.ProductRepository;
 public class AdminController {
 	@Autowired
 	private ProductRepository productRepo;
-	
+
 	@Autowired
 	private CategoryRepository categoryRepo;
-	
-	
-	   @RequestMapping(value = { "/admin/login" }, method = RequestMethod.GET)
-	   public String login(Model model) {
-		   GlobalData.cart.clear();
-	      return "login";
-	   }
-	   
-	   @RequestMapping(value = { "/admin/accountInfo" }, method = RequestMethod.GET)
-	   public String accountInfo(Model model) {
-	 
-	      UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	      System.out.println(userDetails.getPassword());
-	      System.out.println(userDetails.getUsername());
-	      System.out.println(userDetails.isEnabled());
-	 
-	      model.addAttribute("userDetails", userDetails);
-	      return "accountInfo";
-	   }  
-	   
-	   
-		
+
+
+	@RequestMapping(value = { "/admin/login" }, method = RequestMethod.GET)
+	public String login(Model model) {
+		GlobalData.cart.clear();
+		return "login";
+	}
+
+	@RequestMapping(value = { "/admin/accountInfo" }, method = RequestMethod.GET)
+	public String accountInfo(Model model) {
+
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(userDetails.getPassword());
+		System.out.println(userDetails.getUsername());
+		System.out.println(userDetails.isEnabled());
+
+		model.addAttribute("userDetails", userDetails);
+		return "accountInfo";
+	}  
+
+
+
 	// GET: Show product.// Insertion de nouveaux produits
-	   @RequestMapping(value = { "/product/new" }, method = RequestMethod.GET)
-	   public String product(Model model) {
-	    
-		   List<Category> listCategory = categoryRepo.findAll();
-			model.addAttribute("product", new Product());
-			model.addAttribute("listCategory", listCategory);
-			
-	      return "product";// formulaire de saisie
-	   }
-	   
-		
+	@RequestMapping(value = { "/product/new" }, method = RequestMethod.GET)
+	public String product(Model model) {
+
+		List<Category> listCategory = categoryRepo.findAll();
+		model.addAttribute("product", new Product());
+		model.addAttribute("listCategory", listCategory);
+
+		return "product";// formulaire de saisie
+	}
+
+
 	// POST: Save product
-		@PostMapping("/products/save")
-		public String saveProduct(@ModelAttribute (name = "product") Product p, 
-				RedirectAttributes ra,
-				@RequestParam("picture")MultipartFile multipartFile)throws IOException {
-			
-			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			p.setImage(fileName);
-			
-			 Product savePro = productRepo.save(p);
-			
-			 String uploadDir = "./imageBabyShop/" + savePro.getCode();
-			 
-			 Path uploadPath = Paths.get(uploadDir);
-			 if(!Files.exists(uploadPath)) {
-				 Files.createDirectories(uploadPath);
-			 }
-			 try (InputStream inputStream = multipartFile.getInputStream()){
-				 Path filePath = uploadPath.resolve(fileName);
-				 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-			 }catch(IOException e) {
-				 throw new IOException("Could not save upload file: " + fileName);
-			 }
-			
-			ra.addFlashAttribute("message", "Ajout reussi");
-			
-			return "redirect:/products";
-			
+	@PostMapping("/products/save")
+	public String saveProduct(@ModelAttribute (name = "product") Product p, 
+			RedirectAttributes ra,
+			@RequestParam("picture")MultipartFile multipartFile)throws IOException {
+
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		p.setImage(fileName);
+
+		Product savePro = productRepo.save(p);
+
+		String uploadDir = "./imageBabyShop/" + savePro.getCode();
+
+		Path uploadPath = Paths.get(uploadDir);
+		if(!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
 		}
-		
-	
-	
+		try (InputStream inputStream = multipartFile.getInputStream()){
+			Path filePath = uploadPath.resolve(fileName);
+			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		}catch(IOException e) {
+			throw new IOException("Could not save upload file: " + fileName);
+		}
 
-		
-		  @GetMapping("products/edit/{code}") public String
-		  showEditProductForm(@PathVariable("code") String code, Model model, RedirectAttributes ra) {
-		  
-		  Product product = productRepo.findById(code).get();
-		  model.addAttribute("product", product);
-		  List<Category> listCategory = categoryRepo.findAll();
-			model.addAttribute("listCategory", listCategory);
-			ra.addFlashAttribute("message", "Vos modifications ont été prises en compte");
-		
-		  return "product";
-		  
-		  }
-		  
-		  
-		  @GetMapping("products/delete/{code}") public String
-		  deleteProduct(@PathVariable("code") String code, Model model) {
-		  productRepo.deleteById(code);
-		  
-		  return "redirect:/products";
-		  }
-		 
+		ra.addFlashAttribute("message", "Ajout reussi");
 
-		
-		
-	
+		return "redirect:/products";
+
+	}
+
+
+
+
+
+	@GetMapping("products/edit/{code}") public String
+	showEditProductForm(@PathVariable("code") String code, Model model, RedirectAttributes ra) {
+
+		Product product = productRepo.findById(code).get();
+		model.addAttribute("product", product);
+		List<Category> listCategory = categoryRepo.findAll();
+		model.addAttribute("listCategory", listCategory);
+		ra.addFlashAttribute("message", "Vos modifications ont été prises en compte");
+
+		return "product";
+
+	}
+
+
+	@GetMapping("products/delete/{code}") public String
+	deleteProduct(@PathVariable("code") String code, Model model) {
+		productRepo.deleteById(code);
+
+		return "redirect:/products";
+	}
+
+
+
+
+
 }

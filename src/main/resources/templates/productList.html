@@ -11,7 +11,8 @@
    <body>
       <th:block th:include="/_header"></th:block>
       <th:block th:include="/_menu"></th:block>
-       
+      
+      
       <div class="page-title">Liste des produits</div>
      
       <div class="product-preview-container" th:each="prodInfo : ${listProduct.content}">
@@ -22,6 +23,7 @@
             <li>Prix: <span th:text="${prodInfo.price} +'€'"></span></li>
             <li>Categorie: <span th:text="${prodInfo.category.nameCategory}"></span></li>
             <li><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></li>
+            <li>	<a href="#" th:href="@{/shop/product/{code}(code=${prodInfo.code})}"  class="btn btn-primary">Voir le produit</a></li>
          
             <!-- For Manager edit Product -->
             <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
