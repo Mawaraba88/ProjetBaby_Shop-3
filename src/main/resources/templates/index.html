@@ -12,7 +12,7 @@
        
       <div class="page-title">Bienvenue dans l'univers des bouts de choux</div>
      
-        <!-- FOrmulaire du filtre -->
+        <!-- Formulaire du filtre -->
       <form th:action="@{/}" method="get">
    		 Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required />
     		&nbsp;
@@ -40,15 +40,14 @@
  			<div class="col-sm-9">
  				<div class="card" th:each="prodInfo : ${listProduct}">
  					<div class="row no-gutters">
- 						<div class="col-sm-5 d-flex justity-content-center">
- 							<!-- <img th:src="@{${prodInfo.imageImagePath}}" width="150px" height="150px" /> -->
- 						</div>
+ 					
  						<div class="col-sm-5 d-flex justity-content-center">
  							<div class="cart-body">
  							
  								<h5 class="card-title" th:text="${prodInfo.name}"></h5>
- 								<h4><span th:text="${prodInfo.price}"></span></h4>
  								<p><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></p>
+ 								<h4><span th:text="${prodInfo.price} +'€'"></span></h4>
+ 								
  								<a href="#" th:href="@{/shop/product/{code}(code=${prodInfo.code})}"  class="btn btn-primary">Voir le produit</a>
  							</div>
  						

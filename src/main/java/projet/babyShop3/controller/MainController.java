@@ -86,7 +86,7 @@ public class MainController {
 	  return "productList"; 
 	  }
 
-	// Controle des catégories
+	// Liste des catégories
 	@GetMapping("/category")
 	public String listCategory(Model model) {
 		List<Category> listCategory = categoryRepo.findAll();
@@ -104,39 +104,9 @@ public class MainController {
 		return "categories_form";
 	}
 
-	// Liste des produits par catégorie
 
-	/*
-	 * @GetMapping("productsByCategory/{idcategory}") public String
-	 * listProductsByCategory(Model model,
-	 * 
-	 * @RequestParam(name="page", defaultValue="0") int page,
-	 * 
-	 * @RequestParam(name="name", defaultValue="") String name,
-	 * 
-	 * @RequestParam(name="size", defaultValue="2") int size,
-	 * 
-	 * @RequestParam(name="idCat", defaultValue="") Integer idcategory) {
-	 * 
-	 * Page<Product> listProduct =
-	 * productRepo.searchProductByCategory(name,idcategory, PageRequest.of(page,
-	 * size)); model.addAttribute("listProduct", listProduct);
-	 * model.addAttribute("currentPage", page); model.addAttribute("size", size);
-	 * model.addAttribute("name",name); model.addAttribute("idcategory",idcategory);
-	 * model.addAttribute("page",new int [listProduct.getTotalPages()]);
-	 * 
-	 * 
-	 * List<Product> listProduct = productRepo.findAll();
-	 * model.addAttribute("listProduct", listProduct);
-	 * 
-	 * 
-	 * return "productListByCategory"; }
-	 */
 
-	// Pour faire la validation avec l'annotation @Valid, on ajoute l'attribut
-	// BindingResult
-
-	// POur les produits
+	// Pour les produits
 
 	@PostMapping("/category/save")
 	public String saveCategory(@ModelAttribute(name = "category") Category cat,
@@ -157,13 +127,13 @@ public class MainController {
 		} catch (IOException e) {
 			throw new IOException("Could not save upload file: " + fileName);
 		}
-		// FileUploadUtil.saveFile(uploadDir,fileName, multipartFile );
+	
 
 		return "redirect:/category";
 
 	}
 
-	// Affichage des produits par catégory
+	// Affichage des produits par catégorie
 
 	@GetMapping("/shop/category/{idCat}")
 	public String showByCategory(Model model, @PathVariable Category idCat) {
@@ -177,30 +147,7 @@ public class MainController {
 		return "index";
 
 	}
-	/*
-	 * //Affichage des produits par ID
-	 * 
-	 * @GetMapping("/shop/product/{code}") public String showViewProduct(Model
-	 * model, //@PathVariable String code
-	 * 
-	 * @RequestParam(name="page", defaultValue="0") int page,
-	 * 
-	 * @RequestParam(name="code", defaultValue="") String code,
-	 * 
-	 * @RequestParam(name="size", defaultValue="2") int size ) { Page<Product>
-	 * listProduct = productRepo.findByCode(code,PageRequest.of(page, size));
-	 * model.addAttribute("listProduct", listProduct);
-	 * 
-	 * 
-	 * List<Category> listCategory = categoryRepo.findAll();
-	 * 
-	 * model.addAttribute("listCategory", listCategory);
-	 * 
-	 * 
-	 * return "productList";
-	 * 
-	 * }
-	 */
+	
 	
 	//Affichage des produits par ID
 	@GetMapping("/shop/product/{code}")
@@ -211,42 +158,13 @@ public class MainController {
 		Product listProduct = productRepo.findByCode(code).get();
 		  model.addAttribute("cartCount", GlobalData.cart.size());
 		model.addAttribute("product", listProduct);
-		 
-		/*
-		 * List<Category> listCategory = categoryRepo.findAll();
-		 * 
-		 * model.addAttribute("listCategory", listCategory);
-		 */
+	
 
 		return "productListView";
 
 	}
 
-	// Pour le panier
-	// Ajout panier
 
-	/*
-	 * @RequestMapping("/buyProduct") public String addShopping(HttpServletRequest
-	 * request, Model model,
-	 * 
-	 * @RequestParam(value = "code", defaultValue = "") String code) { if (code !=
-	 * null) { Product productCart = productRepo.getOne(code);
-	 * listProductCart.add(productCart);
-	 * 
-	 * totalPrice = totalPrice + productCart.getPrice();
-	 * 
-	 * model.addAttribute("listProductCart", listProductCart);
-	 * model.addAttribute("totalPrice", totalPrice);
-	 * 
-	 * return "shoppingCart"; } else {
-	 * 
-	 * model.addAttribute("listProductCart", listProductCart);
-	 * model.addAttribute("totalPrice", totalPrice);
-	 * 
-	 * return "shoppingCart";
-	 * 
-	 * } }
-	 */
 
 	
 	  @GetMapping("/buyProduct/{code}") public String addShopping(Model
@@ -255,25 +173,7 @@ public class MainController {
 		  
 		  GlobalData.cart.add(productRepo.findByCode(code).get());
 		  return "redirect:/shoppingCart";
-			/*
-			 * if (code != null)
-			 * 
-			 * { Product productCart = productRepo.getOne(code);
-			 * listProductCart.add(productCart);
-			 * 
-			 * totalPrice = totalPrice + productCart.getPrice();
-			 * 
-			 * model.addAttribute("listProductCart", listProductCart);
-			 * model.addAttribute("totalPrice", totalPrice);
-			 * 
-			 * return "shoppingCart"; } else {
-			 * 
-			 * model.addAttribute("listProductCart", listProductCart);
-			 * model.addAttribute("totalPrice", totalPrice);
-			 */
-	  
-	
-	  
+			
 	  } 
 	  
 	  @GetMapping("/shoppingCart")
@@ -285,27 +185,7 @@ public class MainController {
 		  return "shoppingCart";
 	  }
 
-	// Suppression produit du panier
-	/*
-	 * @RequestMapping("/shoppingCartRemoveProduct") public String
-	 * removeProductHandler(HttpServletRequest request, Model model,
-	 * 
-	 * @RequestParam(value = "code", defaultValue = "") String code) {
-	 * 
-	 * for (int i = 0; i < listProductCart.size(); i++) { if (code ==
-	 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
-	 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
-	 * 
-	 * } model.addAttribute("listProductCart", listProductCart);
-	 * model.addAttribute("totalPrice", totalPrice);
-	 * 
-	 * return "shoppingCart"; }
-	 */
-	/*
-	 * @GetMapping("/shoppingCartRemoveProduc/{code}") public String
-	 * cartItemRemove(@PathVariable String code) { GlobalData.cart.remove(code);
-	 * return "redirect:/shoppingCart"; }
-	 */
+
 	  
 	  @GetMapping("/cart/removeItem/{index}")
        public String cartItemRemove(@PathVariable int index) {
@@ -319,81 +199,14 @@ public class MainController {
 		  return "shoppingCartCustomer";
 	  }
 	  
-	  @GetMapping("/payNow")
+	  @PostMapping("/payNow")
 	  public String payNow() {
 		  
 		  
-		  return "redirect:/shoppingCartFinalize";
+		  return "shoppingCartFinalize";
 	  }
-	/*
-	 * @GetMapping("/shoppingCartRemoveProduct") public String removeProductHandler(
-	 * Model model,
-	 * 
-	 * String code) {
-	 * 
-	 * for (int i = 0; i < listProductCart.size(); i++) { if(code ==
-	 * listProductCart.get(i).getCode()) { totalPrice = totalPrice -
-	 * listProductCart.get(i).getPrice(); listProductCart.remove(i); }
-	 * 
-	 * } model.addAttribute("listProductCart", listProductCart);
-	 * model.addAttribute("totalPrice", totalPrice);
-	 * 
-	 * return "shoppingCart"; }
-	 */
+
 
 }
 
-// POur les produits
 
-// Liste des produits par category
-
-/*
- * @GetMapping("/category") public String listProductsByCategory(Model model,
- * 
- * @RequestParam(name="page", defaultValue="0") int page,
- * 
- * @RequestParam(name="name", defaultValue="") String cat,
- * 
- * @RequestParam(name="size", defaultValue="2") int size) {
- * 
- * Page<Product> listProduct = productRepo.searchProductByCategory(cat,
- * PageRequest.of(page, size)); model.addAttribute("listProduct", listProduct);
- * model.addAttribute("currentPage", page); model.addAttribute("size", size);
- * model.addAttribute("name",cat); model.addAttribute("page",new int
- * [listProduct.getTotalPages()]);
- * 
- * 
- * List<Product> listProduct = productRepo.findAll();
- * model.addAttribute("listProduct", listProduct);
- * 
- * 
- * return "productList"; }
- */
-
-// POur les l'achat
-
-// Methode pour recuprer la photo
-/*
- * @RequestMapping(value="/categoryImage", produces=MediaType.IMAGE_JPEG_VALUE)
- * 
- * public byte[] getPhoto(Integer id) { File f = new File()); return
- * 
- * 
- * 
- * }
- */
-/*
- * @RequestMapping(value = { "/categoryImage" }, method = RequestMethod.GET)
- * public void categoryImage(HttpServletRequest request, HttpServletResponse
- * response, Model model,
- * 
- * @RequestParam("idCategory") Integer idCategory) throws IOException { Category
- * category = null; if (idCategory != null) { category =
- * this.repo.findCategory(idCategory); } if (category != null &&
- * category.getPhoto() != null) {
- * response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
- * //response.encodeRedirectURL(category.getPhoto());
- * //getOutputStream().write(0);
- * response.getOutputStream().write(category.getPhoto()); }
- * response.getOutputStream().close(); }
- */

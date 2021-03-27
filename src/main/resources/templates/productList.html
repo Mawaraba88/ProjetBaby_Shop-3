@@ -19,7 +19,7 @@
            
             <li>Code: <span th:text="${prodInfo.code}"></span></li>
             <li>Nom: <span th:text="${prodInfo.name}"></span></li>
-            <li>Prix: <span th:text="${prodInfo.price}"></span></li>
+            <li>Prix: <span th:text="${prodInfo.price} +'€'"></span></li>
             <li>Categorie: <span th:text="${prodInfo.category.nameCategory}"></span></li>
             <li><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></li>
          
