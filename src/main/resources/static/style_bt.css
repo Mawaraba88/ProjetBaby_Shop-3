@@ -1,0 +1,97 @@
+header{
+	min-width: 320px;
+	font-size: 22px;
+	font-family: 'Playfair Display', serif;
+}
+
+h1{
+	text-align: center;
+}
+
+h3{
+	text-align: center;
+}
+
+img{
+	max-width: 100%;
+	height: auto;
+}
+
+header .dop-functions{
+	margin-left: 25px;
+}
+
+.body header a{
+	color: #b4ad9e;
+}
+
+
+header .nav-item{
+	text-transform: uppercase;
+	margin-left: 50px;
+}
+
+header .navbar-brand{
+	font-size: 30px;
+}
+
+
+.slider1{
+	width: 500px;
+	height: 150px;
+}
+
+.slider2{
+	width: 500px;
+	height: 150px;
+}
+
+
+.slider3{
+	width: 500px;
+	height: 150px;
+}
+
+
+.grid{
+	margin-top: 50px;
+}
+
+.grid .card{
+	margin-bottom: 40px;
+}
+
+.grid .card-img-top{
+	max-height: 350px;
+}
+
+.grid-slider{
+	margin: 50px;
+}
+
+.grid-slider .card{
+	border: 0;
+}
+
+footer{
+	margin-top: 150px;
+	background-color: #f0f0f0;
+	padding: 40px 0;
+}
+
+.footer-left{
+	margin-left: 20px;
+	font-size: 25px;
+}
+
+.footer-left a{
+	color: #000;
+	margin-right: 20px;
+}
+
+.footer-right{
+	margin-right: 20px;
+	font-size: 25px;
+	color: #000;
+}
+
