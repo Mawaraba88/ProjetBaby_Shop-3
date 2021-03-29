@@ -1,22 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="fr">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title> Inscription d'un Utilisateur</title>
-<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<link rel="stylesheet" type="text/css" href="../style_bt.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Playfair+Display&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+	<title>Ajouter une catégorie</title>
 </head>
-<body>
-	  
-      <th:block th:include="/_header"></th:block>
-      <th:block th:include="/_menu"></th:block>
+
+<header th:insert="_header::header"></header>
        
 	<div class="container text-center">
 		<div>
 			<h1>Création de nouvelles categories</h1>
 		</div>
-		
+
 		<form th:action="@{/category/save}" th:object="${category}" method="post" enctype="multipart/form-data">
-			<div class="m-3">
+			<div>
+				<p>
+					<label>Nom de la catégorie:</label>
+					<input type="text" class="form-control" th:field="*{nameCategory}" required maxlength="20"/>
+					<span class="text-danger" th:errors="*{nameCategory}"></span>
+				</p>
+				<p>
+					<label>Iamge:</label>
+					<input type="file" class="form-control" name="picture" id="picture" accept="image/png, image/jpeg, image/jpg" required/>
+					<span class="text-danger" th:value="*{photo}"></span>
+				</p>
+				<p class="text-center">
+					<input type="submit" value="Enregistrer" class="btn btn-success m-3" />
+				</p>
+			</div>
+
+
+			<!--<div class="m-3">
 				
 			
 				<div class="form-group row">
@@ -47,11 +71,16 @@
 				
 			</div>
 		
-		</form>
+		</form>-->
 		
+		</form>
 	</div>
-	
-	
+
+<div th:insert="_footer::footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script src="https://kit.fontawesome.com/3065d88318.js" crossorigin="anonymous"></script>
 
 </body>
 </html>

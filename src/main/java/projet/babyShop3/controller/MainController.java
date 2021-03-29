@@ -46,7 +46,7 @@ public class MainController {
 	List<Product> listProductCart = new ArrayList<>();
 
 
-	@GetMapping("/")
+	/*@GetMapping("/")
 	public String home(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "name", defaultValue = "") String name,
 			@RequestParam(name = "size", defaultValue = "2") int size
@@ -60,7 +60,7 @@ public class MainController {
 		model.addAttribute("page", new int[listProduct.getTotalPages()]);
 		  model.addAttribute("cartCount", GlobalData.cart.size());
 		List<Category> listCategory = categoryRepo.findAll();
-		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("listCategory", listCategory);*/
 		
 		  
 		/*
@@ -71,8 +71,26 @@ public class MainController {
 		 * model.addAttribute("pages", new int[listCategory.getTotalPages()]);
 		 */
 
+		/*return "index";
+	}*/
+
+	@GetMapping("/")
+	public String home(){
+
+
+
+
+		/*
+		 * Page<Category> listCategory = repo.findByNameCategory(likeName,
+		 * PageRequest.of(page, size)); model.addAttribute("listCategory",
+		 * listCategory); model.addAttribute("currentPage", page);
+		 * model.addAttribute("size", size); model.addAttribute("likename", likeName);
+		 * model.addAttribute("pages", new int[listCategory.getTotalPages()]);
+		 */
+
 		return "index";
 	}
+
 
 	// Controle des catégories
 	@GetMapping("/category")
@@ -162,7 +180,7 @@ public class MainController {
 		  model.addAttribute("cartCount", GlobalData.cart.size());
 		model.addAttribute("listCategory", listCategory);
 
-		return "index";
+		return "productsByCategory";
 
 	}
 	/*
@@ -307,11 +325,11 @@ public class MainController {
 		  return "shoppingCartCustomer";
 	  }
 	  
-	  @GetMapping("/payNow")
+	  @PostMapping("/payNow")
 	  public String payNow() {
 		  
 		  
-		  return "redirect:/shoppingCartFinalize";
+		  return "shoppingCartFinalize";
 	  }
 	/*
 	 * @GetMapping("/shoppingCartRemoveProduct") public String removeProductHandler(

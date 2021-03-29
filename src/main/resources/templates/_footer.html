@@ -1,7 +1,18 @@
-<div class="footer-container" xmlns:th="http://www.thymeleaf.org">
-  
-   @Copy right <a href="http://Baby&Shop.org" target="_blank">Baby&Shop.org</a>
-   <br>
-   See more <a>demo</a>
-     
+<div th:fragment="header">
+   <footer>
+      <div class="container">
+         <div class="d-flex justify-content-between">
+            <div class="footer-left">
+               <a href="#">Nous contacter</a>
+               <a href="#">Plus d'information</a>
+            </div>
+            <div class="footer-right">
+               <span>Suivez-nous</span>
+               <a href="https://fr-fr.facebook.com"><i class="fab fa-facebook-square"></i></a>
+               <a href="https://twitter.com"><i class="fab fa-twitter-square"></i></a>
+               <a href="https://www.linkedin.com/in/anady-site-0a2878204/"><i class="fab fa-linkedin"></i></a>
+            </div>
+         </div>
+      </div>
+   </footer>
 </div>

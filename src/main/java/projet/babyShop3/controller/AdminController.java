@@ -147,7 +147,7 @@ public class AdminController {
 		  public String listProducts(Model model,
 				  @RequestParam(name="page", defaultValue="0") int page,
 				  @RequestParam(name="name", defaultValue="") String name,
-				  @RequestParam(name="size", defaultValue="2") int size) 
+				  @RequestParam(name="size", defaultValue="10") int size)
 		  {
 		  
 			  Page<Product> listProduct = productRepo.findAll(name, PageRequest.of(page, size));
@@ -164,7 +164,7 @@ public class AdminController {
 			  
 			 
 		  
-		  return "index"; 
+		  return "productList";
 		  }
 	
 	

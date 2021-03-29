@@ -1,85 +1,114 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-   <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
-   <script type="text/javascript" href="/webjars/bootstrap/js/bootstrap.min.js"></script>
-   <head>
-      <meta charset="UTF-8">
-      <title>Liste des produits</title>
-      <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
-   </head>
-   <body>
-      <th:block th:include="/_header"></th:block>
-      <th:block th:include="/_menu"></th:block>
-       
-      <div class="page-title">Liste des produits</div>
-     
-      <div class="product-preview-container" th:each="prodInfo : ${listProduct.content}">
-         <ul>
-           <!--  <li><img class="product-image"
-               th:src="@{|/productImage?code=${prodInfo.code}|}" /></li> -->
-            <li>Code: <span th:text="${prodInfo.code}"></span></li>
-            <li>Nom: <span th:text="${prodInfo.name}"></span></li>
-            <li>Prix: <span th:text="${prodInfo.price}"></span></li>
-            <li>Categorie: <span th:text="${prodInfo.category.nameCategory}"></span></li>
-            <li><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></li>
-            <li>
-               <a th:href="@{|/buyProduct?code=${prodInfo.code}|}">Ajouter au panier</a>
-            </li>
-            <!-- For Manager edit Product -->
-            <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
-               <li>
-                 <a style="color:red;"
-                    th:href="@{'/products/edit/'+${prodInfo.code}}">Modifier</a>
-               </li>
-               
-                <li>
-                 <a style="color:red;" 
-                 	onclick="javascript:return confirm('Êtes-vous sûre de vouloir supprimer?')"   
-                    th:href="@{'/products/delete/'+${prodInfo.code}}">Supprimer</a>
-               </li>
-            </th:block>
-         </ul>
-      </div>
-       
-      <br/>
-    
-      <!-- <div class="page-navigator" th:if="${paginationProducts.totalPages > 1}">
-         <th:block th:each="page : ${paginationProducts.navigationPages}">
-         
-            <a th:href="@{|/productList?page=${page}|}" th:if="${page != -1}"
-               class="nav-item" th:utext="${page}"></a>
-               
-            <span class="nav-item" th:if="${page == -1}"> ... </span>
-             
-         </th:block>
-      </div> -->
+<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
 
-  <!-- Pagination -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="style_bt.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Playfair+Display&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+    <title>Produits</title>
+</head>
+
+<body>
+   <header th:insert="_header::header"></header>
+
+   <br/><br/>
+      <h1 class="container d-flex justify-content-center">Liste des produits</h1>
+   <br/>
+   <div class="container justify-content-center" style="max-width: 700px">
+       <!-- Formulaire du filtre -->
+
+       <form class="form-inline" th:action="@{/products}" method="get">
+           <div class="form-group mx-sm-3 mb-2">
+               <label for="name" class="sr-only">Filtrer</label>
+               <input type="text" name="name" id="name" size="50" th:value="${name}" required class="form-control" placeholder="Filtrer">
+           </div>
+           <div class="text-center">
+               <button class="btn btn-success btn-sx"  type="submit">Search</button>
+               &nbsp;
+               <button class="btn btn-danger btn-sx" type="button" id="btnClear" onclick="clearSearch()">Clear</button>
+           </div>
+       </form>
+
+
+
+       <!--<form th:action="@{/}" method="get">
+           Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required class="form-group"/>
+           <br/><br/>
+           <input class="btn btn-success" type="submit" value="Search"/>
+           &nbsp;
+           <input class="btn btn-danger" type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+       </form>-->
+   </div>
+
+
+
+   <br/>
+   <div class="container d-flex justify-content-center" th:each="prodInfo : ${listProduct.content}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-light mb-3" style="max-width: 30rem";>
+                    <img class="card-img-top" th:src="@{${prodInfo.imageImagePath}}"/>
+                        <br/>
+                    <a th:href="@{/shop/product/{code}(code=${prodInfo.code})}" class="btn btn-success">Voir le produit</a>
+                    <br/><br/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-center" >
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item list-group-item-secondary">Nom du produit: <span th:text="${prodInfo.name}"></span></li>
+                        <li class="list-group-item list-group-item-primary">Code du produit: <span th:text="${prodInfo.code}"></span></li>
+                        <li class="list-group-item list-group-item-info">Categorie: <span th:text="${prodInfo.category.nameCategory}"></span></li>
+                        <li class="list-group-item list-group-item-success">Prix: <span th:text="${prodInfo.price}+' €'"></span></li>
+                        <!-- For Manager edit Product -->
+                        <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
+                            <li class="list-group-item list-group-item-danger">
+                                <a class="btn btn-danger"
+                                   th:href="@{'/products/edit/'+${prodInfo.code}}">Modifier</a>
+                            </li>
+                            <li class="list-group-item list-group-item-danger">
+                                <a class="btn btn-danger"
+                                   onclick="javascript:return confirm('Êtes-vous sûre de vouloir supprimer?')"
+                                   th:href="@{'/products/delete/'+${prodInfo.code}}">Supprimer</a>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+            </div>
+        </div>
+   </div>
+
+      <br/>
+
   <ul class="pagination justify-content-center">
   	<ul class="nav nav-pills">
-  		<li class="page-item"><a class="page-link"
-  		 href="#" tabindex="-1">Précédent</a></li>
-  		 <li th:each="page, status:${page}">
-  		 <a 
+        <li th:each="page, status:${page}">
+             <a
   		 th:class="${status.index==currentPage?'btn btn-secondary':'btn'}"
   		 th:href="@{products(page=${status.index}, size=${size}, name=${name})}"
   		 th:text="${status.index+1}"></a>
   		</li>
-  		<li class="page-item"><a class="page-link" href="#">Suivant</a>
-  		
-  		</li>
   	</ul>
-  
   </ul>
-  
- 
-      <th:block th:include="/_footer"></th:block>
+
+
+   <div th:insert="_footer::footer"></div>
    <script type="text/javascript">
    		 function clearSearch() {
         window.location = "[[@{products}]]";
     	}
     </script>
+
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+   <script type="text/javascript" src="js/main.js"></script>
+   <script src="https://kit.fontawesome.com/3065d88318.js" crossorigin="anonymous"></script>
 
    </body>
 </html>

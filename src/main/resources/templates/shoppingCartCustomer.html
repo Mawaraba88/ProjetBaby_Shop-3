@@ -1,15 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="fr">
 <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-      <meta charset="UTF-8">
-      <title>Vos informations</title>
-      <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
-   </head>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" type="text/css" href="style_bt.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Playfair+Display&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+    <title>Commande</title>
+</head>
    <body>
-      <th:block th:include="/_header"></th:block>
-      <th:block th:include="/_menu"></th:block>
-       
-      <div class="page-title">Entrer vos informations</div>
+   <header th:insert="_header::header"></header>
+       <br>
+      <h3>Entrez vos informations</h3>
        
        <div class="container">
 
@@ -36,8 +44,9 @@
 
                                 <!-- First name -->
                                 <div class="md-form md-outline mb-0 mb-lg-4">
-                                    <label for="firstName">Prenom</label>
-                                    <input type="text" id="firstName" required class="form-control mb-0 mb-lg-2">
+                                    <label for="firstName">Prénom</label>
+                                    <input type="text" id="firstName" required class="form-control mb-0 mb-lg-2"
+                                    placeholder="Saisir votre prénom">
                                 </div>
 
                             </div>
@@ -49,7 +58,7 @@
                                 <!-- Last name -->
                                 <div class="md-form md-outline">
                                     <label for="lastName">Nom</label>
-                                    <input type="text" id="lastName" required class="form-control">
+                                    <input type="text" id="lastName" required class="form-control" placeholder="Saisir votre nom">
                                 </div>
 
                             </div>
@@ -63,7 +72,7 @@
                         <!-- Country -->
                         <div class="d-flex flex-wrap">
                             <div class="select-outline position-relative w-100">
-                                <label>Pays - <strong>France</strong></label>
+                                <label>Pays  <strong>France</strong></label>
 
 
                             </div>
@@ -71,8 +80,8 @@
 
                         <!-- Address Part 1 -->
                         <div class="md-form md-outline mt-2">
-                            <label for="form14">Addresse </label>
-                            <input type="text" required id="form14" placeholder="House number and street name" class="form-control">
+                            <label for="form14">Adresse </label>
+                            <input type="text" required id="form14" placeholder="Saisir votre adresse" class="form-control">
                         </div>
 
                
@@ -80,18 +89,19 @@
 
                         <!-- Phone -->
                         <div class="md-form md-outline mt-2">
-                            <label for="form18">Telephone</label>
-                            <input type="number" minlength="10" maxlength="10" required id="form18" class="form-control">
+                            <label for="form18">Téléphone</label>
+                            <input type="number" minlength="10" maxlength="10" required id="form18" class="form-control" 
+                            placeholder="+33 XX XX XX XX XX">
                         </div>
 
                         <!-- Email address -->
                         <div class="md-form md-outline mt-2">
                             <label for="form19">Email </label>
-                            <input type="email" required id="form19" class="form-control">
+                            <input type="email" required id="form19" class="form-control" placeholder="Saisir votre email">
                         </div>
                         
                           <div class="md-form md-outline mt-2">
-                            <label for="form14">Numero de carte bancaire </label>
+                            <label for="form14">Numéro de carte bancaire </label>
                             <input type="text" required id="form14" placeholder="numero de carte bancaire" class="form-control">
                         </div>
                         
@@ -100,7 +110,13 @@
                             <input type="text" required id="form14" placeholder="CVC" class="form-control">
                         </div>
                       
-
+						<div>
+                            <br>
+						<form action="" method="post" th:action="@{/payNow}" >
+                            <button type="submit"  class="btn btn-success btn-block waves-effect waves-light">Payez maintenant</button>
+                        </form>
+						
+						</div>
 
                     </div>
                 </div>
@@ -110,6 +126,7 @@
             <!--Grid column-->
 
             <!--Grid column-->
+
             <div class="col-lg-4">
 
                 <!-- Card -->
@@ -121,7 +138,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                 Le montant à payé
-                                <span>€<span th:text="${total}"></span></span>
+                                <span th:text="${total} +'€'"></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 Livraison
@@ -134,13 +151,11 @@
                                         <p class="mb-0">(TVA inclut)</p>
                                     </strong>
                                 </div>
-                                <span><strong>€<span th:text="${total}"></span></strong></span>
+                                <span><strong><span th:text="${total} +'€'"></span></strong></span>
                             </li>
                         </ul>
 
-                        <form action="" method="post" th:action="@{/payNow}" >
-                            <button type="submit"  class="btn btn-primary btn-block waves-effect waves-light">Payé maintenant</button>
-                        </form>
+                        
 
                     </div>
                 </div>
@@ -150,10 +165,9 @@
                 <div class="card mb-4">
                     <div class="card-body">
 
-                        <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" th:href="@{/}"
-                           aria-expanded="false" aria-controls="collapseExample">
+                       <a class="btn btn-primary btn-block waves-effect waves-light" th:href="@{/}"
+                               aria-expanded="false" aria-controls="collapseExample">
                             Continuer les achats
-                            <span><i class="fas fa-chevron-down pt-1"></i></span>
                         </a>
 
                         <div class="collapse" id="collapseExample">
@@ -167,53 +181,18 @@
                     </div>
                 </div>
                 <!-- Card -->
-       
-       
-     <!--  <form method="POST" th:object = "${customerForm}" th:action="@{/shoppingCartCustomer}">
-          
-         <table>
-            <tr>
-               <td>Nom *</td>
-               <td><input th:field="*{name}" /></td>
-               <td>
-                  <span class="error-message"
-                     th:if="${#fields.hasErrors('name')}" th:errors="*{name}">..</span>
-               </td>
-            </tr>
-            <tr>
-               <td>Email *</td>
-               <td><input th:field="*{email}" /></td>
-               <td>
-                  <span class="error-message"
-                     th:if="${#fields.hasErrors('email')}" th:errors="*{email}">..</span>
-               </td>
-            </tr>
-            <tr>
-               <td>Téléphone *</td>
-               <td><input th:field="*{phone}" /></td>
-               <td>
-                  <span class="error-message"
-                     th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">..</span>
-               </td>
-            </tr>
-            <tr>
-               <td>Addresse *</td>
-               <td><input th:field="*{address}" /></td>
-               <td>
-                  <span class="error-message"
-                     th:if="${#fields.hasErrors('address')}" th:errors="*{address}">..</span>
-               </td>
-            </tr>
-            <tr>
-               <td>&nbsp;</td>
-               <td><input type="submit" value="Valider" /> <input type="reset"
-                  value="Rénitialiser" /></td>
-            </tr>
-         </table>
-          
-      </form> -->
-       
-      <th:block th:include="/_footer"></th:block>
+            </div>
+        </div>
+    </section>
+       </div>
+            <div th:insert="_footer::footer"></div>
+
+
+
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+                <script type="text/javascript" src="js/main.js"></script>
+                <script src="https://kit.fontawesome.com/3065d88318.js" crossorigin="anonymous"></script>
        
    </body>
 </html>

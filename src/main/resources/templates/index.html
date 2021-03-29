@@ -1,4 +1,153 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="fr">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" type="text/css" href="style_bt.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Playfair+Display&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+    <title>Baby&Shop</title>
+</head>
+
+<body>
+
+<header th:insert="_header::header"></header>
+
+<div class="grid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card text-primary border-primary mb-3" style="background-color: #e3f2fd">
+                    <img src="img/Chambre.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title">Chambres</h4>
+                        <p class="card-text">Veuillez découvrir nos chambre...</p>
+                        <a href="/shop/category/1" class="btn btn-info">Chambres-></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-primary border-primary mb-3" style="background-color: #e3f2fd">
+                    <img src="img/Eveil.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title">Éveils</h4>
+                        <p class="card-text">Ici vous trouverez...</p>
+                        <a href="/shop/category/2" class="btn btn-info">Éveils-></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-primary border-primary mb-3" style="background-color: #e3f2fd">
+                    <img src="img/Vetements.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title">Vêtements</h4>
+                        <p class="card-text">Les meilleurs...</p>
+                        <a href="/shop/category/3" class="btn btn-info">Vêtements-></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-primary border-primary mb-3" style="background-color: #e3f2fd">
+                    <img src="img/Repas.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h4 class="card-title">Repas</h4>
+                        <p class="card-text">Gourmandises les plus délicieuses...</p>
+                        <a href="/shop/category/4" class="btn btn-info">Repas-></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid-slider">
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card">
+                <div class="container slider">
+                    <div id="slider1" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="img/Car1.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/Car2.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/Car3.jpg" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="container slider">
+                    <div id="slider2" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="img/Car4.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/Car5.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/Car6.jpg" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="container slider">
+                    <div id="slider3" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="img/Car7.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/Car8.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/Car9.jpg" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:insert="_footer::footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script src="https://kit.fontawesome.com/3065d88318.js" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
    <head>
       <meta charset="UTF-8">
@@ -10,25 +159,21 @@
       <th:block th:include="/_header"></th:block>
       <th:block th:include="/_menu"></th:block>
        
-      <div class="page-title">Bienvenue dans l'univers des bouts de choux</div>
-     
-        <!-- FOrmulaire du filtre -->
-      <form th:action="@{products}" method="get">
-   		 Filter: <input type="text" name="name" id="name" size="50" th:value="${name}" required />
-    		&nbsp;
-	    	<input type="submit" value="Search" />
-	    	&nbsp;
-   			 <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
-	</form>
-       
+      <div class="page-title">Bienvenue dans l'univers des bouts de choux</div>-->
+      
+      
       <!-- Liste des catégories -->
       
-    <!--   <div>
+      <!--<div>
       <table>
       		<th:block  th:each="cat:${listCategory}">
       		
-          	<tr>
-          		<td> <img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></td>
+          	<tr>-->
+          		<!--  <td><img th:src="@{|/categoryImage?idCategory=${Category.idCategory}|}"/></td>
+          			<td<img th:src="${cat.photo}"/></td>-->
+          			<!-- <td><img src="../static/img/imgTest.jpg" width="1000" th:src="@{img/imgTest.jpg}"/></td> -->
+          		<!-- 	<td><img src="@{https://zupimages.net/viewer.php?id=21/11/aqpr.jpg}" width="500" th:src="@{https://zupimages.net/viewer.php?id=21/11/aqpr.jpg}"/></td> -->
+          		<!--<td> <img th:src="@{${cat.photoImagePath}}" /></td>
           		<td th:text="${cat.nameCategory}"></td>
       		</tr>
       		</th:block>
@@ -37,70 +182,10 @@
       </table>
   
       
-      </div> -->
-      
-      <div class="container">
-       	<div class="row">
-       		<div class="col-sm-3">
-       			<h4>Catégories</h4>	
-       			<ul class="List-group">
-       				<a th:href="@{/}"><li class="list-group-item">Tous les produits</li></a>
-       				<a href="" th:each="cat, iStat : ${listCategory}"
-       				th:href="@{/shop/category/{idCat}(idCat=${cat.idcategory})}">
-       				<li class="list-group-item" th:text="${cat.nameCategory}"></li>
-       				<!-- <span><img th:src="@{${cat.photoImagePath}}" width="150" height="150" /></span> -->
-       				</a>
-       			</ul>
-       		</div>
-       	
- 			<div class="col-sm-9">
- 				<div class="card" th:each="prodInfo : ${listProduct}">
- 					<div class="row no-gutters">
- 						<div class="col-sm-5 d-flex justity-content-center">
- 							<!-- <img th:src="@{${prodInfo.imageImagePath}}" width="150px" height="150px" /> -->
- 						</div>
- 						<div class="col-sm-5 d-flex justity-content-center">
- 							<div class="cart-body">
- 							
- 								<h5 class="card-title" th:text="${prodInfo.name}"></h5>
- 								<h4><span th:text="${prodInfo.price}"></span></h4>
- 								<p><img th:src="@{${prodInfo.imageImagePath}}" width="150" height="150" /></p>
- 								<a href="#" th:href="@{/shop/product/{code}(code=${prodInfo.code})}"  class="btn btn-primary">Voir le produit</a>
- 							</div>
- 						
- 						</div>
- 					</div>
- 				</div>
- 				
- 			
- 			</div>      	
-       	
-       	
-       	
-       	</div>
-      
-      
       </div>
       
-  <!--     <ul class="pagination justify-content-center">
-  	<ul class="nav nav-pills">
-  		<li class="page-item"><a class="page-link"
-  		 href="#" tabindex="-1">Précédent</a></li>
-  		 <li th:each="page, status:${page}">
-  		 <a 
-  		 th:class="${status.index==currentPage?'btn btn-secondary':'btn'}"
-  		 th:href="@{/(page=${status.index}, size=${size}, name=${name})}"
-  		 th:text="${status.index+1}"></a>
-  		</li>
-  		<li class="page-item"><a class="page-link" href="#">Suivant</a>
-  		
-  		</li>
-  	</ul>
-  
-  </ul>  -->
- 
       
       <th:block th:include="/_footer"></th:block>
-   
+       
    </body>
-</html>
+</html>-->
